@@ -14,6 +14,7 @@ namespace VitaShooter
 {
 	public class Map
 	{
+		public static Map Instance;
 		public List<MapTile> tiles;
 		public int width = 0, height = 0;
 		public List<SpriteList> spriteList { get; set;}
@@ -21,8 +22,6 @@ namespace VitaShooter
 		public Random random;
 		
 		public Dictionary<string, Vector2i> tileLocations; 
-		
-		public Dictionary<string, SpriteUV> tileSprites;
 		
 		public Map ()
 		{
@@ -345,8 +344,11 @@ namespace VitaShooter
 					//sprite.Scale = new Vector2(2.0f,2.0f);
 					//sprite.Quad.S = new Vector2(2f,2);
 					Vector2 p = new Vector2(x,y) - (new Vector2(m.width,m.height))/2.0f ;
-
-					System.Console.WriteLine(p.ToString());
+					
+					//save the tile position in its object
+					tiles[position].position = p;
+					
+					//set that position to the sprite
 					sprite.Position = p;
 					
 					
@@ -354,17 +356,8 @@ namespace VitaShooter
 					if(tiles[position].type.Contains("floor"))
 					{
 						sprite.Schedule( (dt) => { 
-							
-							//var tint = new TintBy(new Vector4(rand.NextFloat(-0.5f,0.5f),rand.NextFloat(-0.1f,0.1f),rand.NextFloat(-0.1f,0.1f),1.0f),0.01f);
-								
-							//var tint = new TintTo(Colors.Green,0.01f);
-							//sprite.RunAction(tint);
-							
-							//sprite.Rotation = sprite.Rotation.Rotate( Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.Deg2Rad( 1.0f ) );
-							
-							//sprite.Color = rand.NextVector4(Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._0000, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._1111);
-							
-							
+
+							//change the floor texture to a random one from the same pack
 							if(Common.FrameCount%10==0)
 							{
 								var a = AppMain.random.Next(4,12);
@@ -373,13 +366,12 @@ namespace VitaShooter
 								
 							}
 							
-							//System.Console.WriteLine("tint");
 						
 						} );
 					}
 					
-					
-					spriteList.AddChild(sprite);
+					tiles[position].sprite = sprite;
+					spriteList.AddChild(tiles[position].sprite);
 					
 						
 				}
@@ -437,7 +429,7 @@ namespace VitaShooter
 					if (character == '\t') {
 						tiles.Add (new MapTile ("empty"));
 					} else if (character == 'D') {
-						tiles.Add (new MapTile ("door"));
+						tiles.Add (new MapTile ("floor")); //temporary change from the door
 						//doors normaly are symolized by two characters,so we need to get rid of the other one
 						sr.Read ();
 						//consume the tab at the end

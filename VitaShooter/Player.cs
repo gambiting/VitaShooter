@@ -90,9 +90,18 @@ namespace VitaShooter
 			{
 				Position = new Vector2 (Position.X, Position.Y + 0.1f);
 			}*/
+			Vector2 proposedChange = new Vector2(analogX/15f,0.0f);
+			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange*5f))
+			{
+				Position+=proposedChange;
+			}
 			
+			proposedChange = new Vector2(0.0f,-analogY/15f);
+			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange*5f))
+			{
+				Position+=proposedChange;
+			}
 			
-			Position = new Vector2 (Position.X + analogX / 15f, Position.Y - analogY / 15f);
 				
 			
 			//rotate according to the right analog stick, or if it's not moving, then according the the left stick

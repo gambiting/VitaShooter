@@ -64,7 +64,7 @@ namespace VitaShooter
 			
 			
 			//load the map
-			dungeon1 = new Map();
+			Map.Instance =  new Map();
 			
 			
 			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameTick, 0.0f, false);
@@ -78,7 +78,7 @@ namespace VitaShooter
 				World.AddChild(player);
 				
 				
-				foreach(SpriteList sl in dungeon1.spriteList)
+				foreach(SpriteList sl in Map.Instance.spriteList)
 				{
 					Background.AddChild(sl);
 				}

@@ -43,6 +43,7 @@
     <Compile Include="GameEntity.cs" />
     <Compile Include="MapTile.cs" />
     <Compile Include="Map.cs" />
+    <Compile Include="Collisions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
