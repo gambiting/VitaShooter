@@ -41,8 +41,8 @@
     <Compile Include="Game.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameEntity.cs" />
-    <Compile Include="data\Map.cs" />
     <Compile Include="MapTile.cs" />
+    <Compile Include="Map.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -62,6 +62,14 @@
       <DeployService-Deploy>true</DeployService-Deploy>
     </Content>
     <Content Include="data\tiles\dungeon_tiles.png" />
+    <Content Include="data\tiles\simple.png" />
+    <Content Include="data\tiles\simple2.png" />
+    <Content Include="data\tiles\empty1.png" />
+    <Content Include="data\tiles\floor1.png" />
+    <Content Include="data\tiles\wall1.png" />
+    <Content Include="data\tiles\simple3.png" />
+    <Content Include="data\tiles\simple4.png" />
+    <Content Include="data\tiles\simple5.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

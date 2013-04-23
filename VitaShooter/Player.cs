@@ -28,8 +28,7 @@ namespace VitaShooter
 			
 			playerBodySprite.CenterSprite(new Vector2(0.5f,0.5f));
 			
-			//playerBodySprite.Pivot = new Vector2 (0.5f, 0.5f);
-			playerBodySprite.Scale = new Vector2 (3.0f, 3.0f);
+			playerBodySprite.Scale = new Vector2 (1.5f, 1.5f);
 			
 			
 			
@@ -75,7 +74,25 @@ namespace VitaShooter
 			
 			
 			//calculate the position
-			Position = new Vector2 (Position.X + analogX / 10f, Position.Y - analogY / 10f);
+			
+			/*if(analogX>0)
+			{
+				Position = new Vector2 (Position.X + 0.1f, Position.Y);
+			}else if(analogX<0)
+			{
+				Position = new Vector2 (Position.X - 0.1f, Position.Y);
+			}
+			
+			if(analogY>0)
+			{
+				Position = new Vector2 (Position.X + Position.Y- 0.1f);
+			}else if(analogY<0)
+			{
+				Position = new Vector2 (Position.X, Position.Y + 0.1f);
+			}*/
+			
+			
+			Position = new Vector2 (Position.X + analogX / 15f, Position.Y - analogY / 15f);
 				
 			
 			//rotate according to the right analog stick, or if it's not moving, then according the the left stick

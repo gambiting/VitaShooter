@@ -45,7 +45,6 @@ namespace VitaShooter
             World = new Layer();
             EffectsLayer = new Layer();
             Foreground = new Layer();
-            Curtains = new Layer();
             Interface = new Layer();
 			
 			//add layers to the scene
@@ -54,13 +53,14 @@ namespace VitaShooter
             Scene.AddChild(EffectsLayer);
             Scene.AddChild(Foreground);
             Scene.AddChild(Interface);
-            Scene.AddChild(Curtains);
 			
 			//set the camera for the scene
 			Scene.Camera.SetViewFromViewport();
-			Vector2 ideal_screen_size = new Vector2(960.0f, 544.0f);
+			//Vector2 ideal_screen_size = new Vector2(960.0f, 544.0f);
 			camera = Scene.Camera as Camera2D;
-			camera.SetViewFromWidthAndCenter( 40.0f, Math._00 );
+			//camera.SetViewFromWidthAndCenter( 40.0f, Math._00 );
+			
+			camera.SetViewFromHeightAndCenter(10.0f, Math._00);
 			
 			
 			//load the map
@@ -91,7 +91,13 @@ namespace VitaShooter
 		
 		public void setCameraPosition()
 		{
+			//camera.Center = new Vector2((float) System.Math.Round(player.Position.X,1),(float) System.Math.Round(player.Position.Y,1)) ;
 			camera.Center = player.Position;
+			
+			//camera.Center.
+			
+			//camera.Center.MoveTo(player.Position,1f);
+			
 		}
 		
 		

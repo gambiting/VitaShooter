@@ -21,14 +21,18 @@ namespace VitaShooter
 	{
 		
 		
+		
 		static FontMap UIFontMap;
 		static FontMap LargeFontMap;
+		
+		
+		public static System.Random random = new System.Random();
 		
 		public static void Main(string[] args)
 		{
 			Director.Initialize();
 
-			Director.Instance.GL.Context.SetClearColor( Colors.Grey20 );
+			Director.Instance.GL.Context.SetClearColor( Colors.Black );
 			Director.Instance.DebugFlags |= DebugFlags.DrawGrid;
 			
 			
@@ -47,7 +51,20 @@ namespace VitaShooter
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.RunWithScene(game.Scene,true);
 			
 			System.Diagnostics.Stopwatch timer = new System.Diagnostics.Stopwatch();
-
+			
+			FrameBuffer offscreenBuffer = new FrameBuffer();
+			Texture2D tex2d = new Texture2D(960, 544,false,PixelFormat.Rgba,PixelBufferOption.Renderable);
+			//tex2d.SetFilter(TextureFilterMode.Disabled);
+			offscreenBuffer.SetColorTarget(tex2d,0);
+			
+			//TextureInfo offscreenTextureInfo = new TextureInfo(tex2d);
+			SpriteUV offscreenSprite = new SpriteUV(new TextureInfo(tex2d));
+			
+			offscreenSprite.Quad.S = new Vector2(2.0f,2.0f);
+			offscreenSprite.Quad.T = new Vector2(-1.0f,-1.0f);
+			offscreenSprite.FlipV = true;
+			
+			
             while (true)
             {
             	timer.Start();
@@ -56,9 +73,25 @@ namespace VitaShooter
 
                 Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.SetBlendMode(BlendMode.Normal);
                 Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Update();
-                Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Render();
+				game.FrameUpdate();
 				
-                game.FrameUpdate();
+				Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetFrameBuffer(offscreenBuffer);
+				
+				Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetViewport(0,0,960,544);
+				Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene.render();
+				//Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Render();
+				
+				Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetFrameBuffer(null);
+				
+				
+				Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetViewport(0,0,GraphicsContext.ScreenSizes[0].Width,GraphicsContext.ScreenSizes[0].Height);
+				
+				offscreenSprite.Draw();
+				
+				
+               
+				
+               
                 
             	timer.Stop();
                 long ms = timer.ElapsedMilliseconds;
@@ -70,6 +103,7 @@ namespace VitaShooter
             }
 			
 		}
+		
 
 	}
 }
