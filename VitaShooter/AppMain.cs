@@ -95,7 +95,7 @@ namespace VitaShooter
                 
             	timer.Stop();
                 long ms = timer.ElapsedMilliseconds;
-                //Console.WriteLine("ms: {0}", (int)ms);
+                System.Console.WriteLine("fps: {0}", 1000/(int)ms);
             	timer.Reset();
 
                 Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SwapBuffers();

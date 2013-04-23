@@ -54,18 +54,17 @@ namespace VitaShooter
             Scene.AddChild(Foreground);
             Scene.AddChild(Interface);
 			
-			//set the camera for the scene
-			Scene.Camera.SetViewFromViewport();
+
 			//Vector2 ideal_screen_size = new Vector2(960.0f, 544.0f);
 			camera = Scene.Camera as Camera2D;
 			//camera.SetViewFromWidthAndCenter( 40.0f, Math._00 );
 			
 			camera.SetViewFromHeightAndCenter(10.0f, Math._00);
+			//camera.SetViewFromViewport();
 			
 			
 			//load the map
 			Map.Instance =  new Map();
-			
 			
 			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameTick, 0.0f, false);
 		}

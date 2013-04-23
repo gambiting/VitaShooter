@@ -16,23 +16,26 @@ namespace VitaShooter
 	{
 		public static Map Instance;
 		public List<MapTile> tiles;
+		
+		public List<MapTile> wallTiles;
 		public int width = 0, height = 0;
 		public List<SpriteList> spriteList { get; set;}
 		
 		public Random random;
 		
-		public Dictionary<string, Vector2i> tileLocations; 
+		public Dictionary<MapTile.Types, Vector2i> tileLocations; 
 		
 		public Map ()
 		{
 			
 			random = new Random();
 			
-			tileLocations = new Dictionary<string, Vector2i>();
+			tileLocations = new Dictionary<MapTile.Types, Vector2i>();
 			
 			setupLocations();
 			
 			tiles = new List<MapTile> ();
+			wallTiles = new List<MapTile> ();
 			
 			
 			ParseFile (this, "/Application/data/dungeon1.txt", tiles);
@@ -75,20 +78,14 @@ namespace VitaShooter
 			
 			//simple setup:
 			
-			tileLocations.Add("floor", new Vector2i(0,2));
-			tileLocations.Add ("wall", new Vector2i(0,1));
-			tileLocations.Add ("empty",new Vector2i(0,0));
-			tileLocations.Add("door", new Vector2i(0,2));
+			tileLocations.Add(MapTile.Types.wall, new Vector2i(0,2));
+			tileLocations.Add (MapTile.Types.floor, new Vector2i(0,1));
+			tileLocations.Add (MapTile.Types.empty,new Vector2i(0,0));
 		}
 		
 		public void prepareDescriptions(Map m, List<MapTile> tiles)
 		{
-			//set the frame around to the wall type
-			//corners
-			tiles[0].type = "wall_corner_bottom_left";
-			tiles[m.width-1].type = "wall_corner_bottom_right";
-			tiles[tiles.Count-m.width].type = "wall_corner_top_left";
-			tiles[tiles.Count-1].type = "wall_corner_top_right";
+
 			
 			
 			
@@ -102,183 +99,42 @@ namespace VitaShooter
 				for(int y=1;y<height-1;y++)
 				{
 					int position = y*m.width+x;
-					if(tiles[position].type.Equals("empty"))
+					if(tiles[position].type == MapTile.Types.empty)
 					{
-						if(tiles[position+m.width].type.Equals("floor") ||	//above
-						   tiles[position-m.width].type.Equals("floor") ||	//below
-						   tiles[position+1].type.Equals("floor") ||		//right
-						   tiles[position-1].type.Equals("floor"))			//left
+						if(tiles[position+m.width].type == MapTile.Types.floor ||	//above
+						   tiles[position-m.width].type == MapTile.Types.floor ||	//below
+						   tiles[position+1].type == MapTile.Types.floor ||		//right
+						   tiles[position-1].type == MapTile.Types.floor)			//left
 						{
-							tiles[position].type = "wall";
+							tiles[position].type = MapTile.Types.wall;
 						}
 					}
 				}
 			}
 			
 			
-			/*
-			 * SECOND PASS
-			 * 
-			 * set the "walls" to be rotated correctly depending on their neighbours
-			 * */
-			for(int x=1;x<width-1;x++)
-			{
-				for(int y=1;y<height-1;y++)
-				{
-					int position = y*m.width+x;
-					if(tiles[position].type.Equals("wall"))
-					{
-						
-						//top wall
-						if(tiles[position+m.width].type.Contains("empty") &&	//above
-						   tiles[position-m.width].type.Contains("floor") &&	//below
-						   (tiles[position+1].type.Contains("wall") ||		//right
-						   tiles[position-1].type.Contains("wall")))			//left
-						{
-							tiles[position].type = "wall_top";
-						}
-						
-						//bottom wall
-						if(tiles[position+m.width].type.Contains("floor") &&	//above
-						   tiles[position-m.width].type.Contains("empty") &&	//below
-						   (tiles[position+1].type.Contains("wall") ||		//right
-						   tiles[position-1].type.Contains("wall")))			//left
-						{
-							tiles[position].type = "wall_bottom";
-						}
-						
-						//left wall
-						if((tiles[position+m.width].type.Contains("wall") ||	//above
-						   tiles[position-m.width].type.Contains("wall")) &&	//below
-						   tiles[position+1].type.Contains("floor") &&		//right
-						   tiles[position-1].type.Contains("empty"))			//left
-						{
-							tiles[position].type = "wall_left";
-						}
-						
-						//right wall
-						if((tiles[position+m.width].type.Contains("wall") ||	//above
-						   tiles[position-m.width].type.Contains("wall")) &&	//below
-						   !tiles[position+1].type.Contains("floor") &&		//right
-						   tiles[position-1].type.Contains("floor"))			//left
-						{
-							tiles[position].type = "wall_right";
-						}
-						
-						//outer corner top left
-						if(tiles[position+m.width].type.Contains("wall") &&	//above
-						   !tiles[position-m.width].type.Contains("wall") &&	//below
-						   !tiles[position+1].type.Contains("wall") &&		//right
-						   tiles[position-1].type.Contains("wall"))			//left
-						{
-							tiles[position].type = "wall_outer_top_left";
-						}
-						
-						//outer corner top right
-						if(tiles[position+m.width].type.Contains("wall") &&	//above
-						   !tiles[position-m.width].type.Contains("wall") &&	//below
-						   tiles[position+1].type.Contains("wall") &&		//right
-						   !tiles[position-1].type.Contains("wall"))			//left
-						{
-							tiles[position].type = "wall_outer_top_right";
-						}
-						
-						//outer corner bottom left
-						if(!tiles[position+m.width].type.Contains("wall") &&	//above
-						   tiles[position-m.width].type.Contains("wall") &&	//below
-						   !tiles[position+1].type.Contains("wall") &&		//right
-						   tiles[position-1].type.Contains("wall"))			//left
-						{
-							tiles[position].type = "wall_outer_bottom_left";
-						}
-						
-						//outer corner bottom right
-						if(!tiles[position+m.width].type.Contains("wall") &&	//above
-						   tiles[position-m.width].type.Contains("wall") &&	//below
-						   tiles[position+1].type.Contains("wall") &&		//right
-						   !tiles[position-1].type.Contains("wall"))			//left
-						{
-							tiles[position].type = "wall_outer_bottom_right";
-						}
-						
-						
-						
-					}
-				}
-			}
-			
-			
-			/*
-			 * THIRD PASS
-			 * 
-			 * give empty spaces corners,when next to walls on two sides
-			 * */
-			for(int x=1;x<width-1;x++)
-			{
-				for(int y=1;y<height-1;y++)
-				{
-					int position = y*m.width+x;
-					if(tiles[position].type.Equals("empty"))
-					{
-						
-						//top right corner
-						if(tiles[position+m.width].type.Contains("empty") &&	//above
-						   tiles[position-m.width].type.Contains("wall") &&		//below
-						   tiles[position+1].type.Contains("empty") &&			//right
-						   tiles[position-1].type.Contains("wall") &&			//left
-						   tiles[position-m.width-1].type.Contains("floor"))	//to prevent reacting to corners we have added previously - below and to the left			
-						{
-							tiles[position].type = "wall_corner_top_right";
-						}
-						
-						//top left corner
-						if(tiles[position+m.width].type.Contains("empty") &&	//above
-						   tiles[position-m.width].type.Contains("wall") &&	//below
-						   tiles[position+1].type.Contains("wall") &&		//right
-						   tiles[position-1].type.Contains("empty") &&		//left
-						   tiles[position-m.width+1].type.Contains("floor"))			//to prevent reacting to corners we have added previously - below and to the right
-						{
-							tiles[position].type = "wall_corner_top_left";
-						}
-						 
-						
-						
-						//bottom right
-						if(tiles[position+m.width].type.Contains("wall") &&	//above
-						   tiles[position-m.width].type.Contains("empty") &&	//below
-						   tiles[position+1].type.Contains("empty") &&		//right
-						   tiles[position-1].type.Contains("wall") &&		//left
-						   tiles[position+m.width-1].type.Contains("floor"))			//to prevent reacting to corners we have added previously - above and to the left
-						{
-							tiles[position].type = "wall_corner_bottom_right";
-						}
-						
-						//bottom left
-						if(tiles[position+m.width].type.Contains("wall") &&	//above
-						   tiles[position-m.width].type.Contains("empty") &&	//below
-						   tiles[position+1].type.Contains("wall") &&		//right
-						   tiles[position-1].type.Contains("empty"))			//left
-						{
-							tiles[position].type = "wall_corner_bottom_right";
-						}
-						
-						
-					}
-				}
-			}
 			
 			
 			//frame
 			for(int x=0;x<m.width;x++)
 			{
-				tiles[x].type= "wall";
-				tiles[(m.width)*(m.height-2) +x].type = "wall";
+				tiles[x].type= MapTile.Types.wall;
+				tiles[(m.width)*(m.height-2) +x].type = MapTile.Types.wall;
 			}
 			
 			for(int x=0;x<m.height-1;x++)
 			{
-				tiles[x*m.height].type= "wall";
-				tiles[x*m.height+m.width-1].type = "wall";
+				tiles[x*m.height].type= MapTile.Types.wall;
+				tiles[x*m.height+m.width-1].type = MapTile.Types.wall;
+			}
+			
+			
+			foreach(MapTile mt in tiles)
+			{
+				if(mt.type == MapTile.Types.wall)
+				{
+					wallTiles.Add(mt);
+				}
 			}
 		}
 		
@@ -353,7 +209,7 @@ namespace VitaShooter
 					
 					
 					
-					if(tiles[position].type.Contains("floor"))
+					if(tiles[position].type == MapTile.Types.floor)
 					{
 						sprite.Schedule( (dt) => { 
 
@@ -371,13 +227,14 @@ namespace VitaShooter
 					}
 					
 					tiles[position].sprite = sprite;
+					//get the local bounds
+					sprite.GetlContentLocalBounds(ref tiles[position].bounds);
 					spriteList.AddChild(tiles[position].sprite);
 					
 						
 				}
 					
 			}
-
 			mapSpriteLists.Add(spriteList);
 			
 			return mapSpriteLists;
@@ -388,7 +245,7 @@ namespace VitaShooter
 		 * returns a sprite constructed from the given tile name
 		 * tile needs to be part of the given texture
 		 * */
-		public SpriteTile returnSpriteFromTile(string tileName,TextureInfo texture)
+		public SpriteTile returnSpriteFromTile(MapTile.Types tileName,TextureInfo texture)
 		{
 			//get the location from the dictionary
 			Vector2i textureLocation;
@@ -427,22 +284,22 @@ namespace VitaShooter
 				while (!sr.EndOfStream) {
 					char character = (char)sr.Read ();
 					if (character == '\t') {
-						tiles.Add (new MapTile ("empty"));
+						tiles.Add (new MapTile (MapTile.Types.empty));
 					} else if (character == 'D') {
-						tiles.Add (new MapTile ("floor")); //temporary change from the door
+						tiles.Add (new MapTile (MapTile.Types.floor)); //temporary change from the door
 						//doors normaly are symolized by two characters,so we need to get rid of the other one
 						sr.Read ();
 						//consume the tab at the end
 						sr.Read ();
 						     
 					} else if (character == 'F') {
-						tiles.Add (new MapTile ("floor"));
+						tiles.Add (new MapTile (MapTile.Types.floor));
 						//consume the tab at the end
 						sr.Read ();
 					}
 					
 					if (character == '\n') {
-						tiles.Add (new MapTile ("empty"));
+						tiles.Add (new MapTile (MapTile.Types.empty));
 						m.height++;
 						
 						if (m.width == 0)

@@ -15,6 +15,8 @@ namespace VitaShooter
 		public float Health { get; set; }
 		public int FrameCount { get; set; }
 		
+		public Bounds2 bounds;
+		
 		public GameEntity ()
 		{
 			

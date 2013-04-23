@@ -22,17 +22,21 @@ namespace VitaShooter
 		
 		public static bool checkWallsCollisions(GameEntity ge, Map map, Vector2 proposedChange)
 		{
-			foreach(MapTile mt in map.tiles)
+			foreach(MapTile mt in map.wallTiles)
 			{
-				if(mt.type.Equals("wall"))
+
+				//construct bounds for the wall
+				Bounds2 tempBounds1 = new Bounds2(mt.position + mt.bounds.Min ,mt.position + mt.bounds.Max);
+			
+				//construct bounds for the coliding object
+				Bounds2 tempBounds2 = new Bounds2(ge.Position + ge.bounds.Min + proposedChange, ge.Position + ge.bounds.Max + proposedChange);
+				
+				//check if overlap exists, if yes,return true
+				if(tempBounds1.Overlaps(tempBounds2))
 				{
-					if(mt.sprite!= null && mt.sprite.IsWorldPointInsideContentLocalBounds(ge.Position + proposedChange))
-					{
-						return true;
-					}
-						
-					
+					return true;
 				}
+
 			}
 			
 			

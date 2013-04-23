@@ -15,6 +15,8 @@ namespace VitaShooter
 	{
 		public SpriteTile playerBodySprite;
 		
+		
+		
 		public Player ()
 		{
 			//load the player's sprite
@@ -23,6 +25,7 @@ namespace VitaShooter
 			playerBodySprite = new SpriteTile ();
 			playerBodySprite.TextureInfo = tex1;
 			playerBodySprite.TileIndex2D = new Vector2i (0, 0);
+			
 			
 			//set up scale,position ect
 			
@@ -36,6 +39,10 @@ namespace VitaShooter
 			
 			Position = new Vector2 (0.0f, 0.0f);
 			
+			//get the local bounds of the sprite
+			bounds = new Bounds2();
+			playerBodySprite.GetlContentLocalBounds(ref bounds);
+			bounds = new Bounds2(bounds.Min*0.5f,bounds.Max*0.5f);
 		}
 		
 		public override void Tick (float dt)
@@ -91,13 +98,13 @@ namespace VitaShooter
 				Position = new Vector2 (Position.X, Position.Y + 0.1f);
 			}*/
 			Vector2 proposedChange = new Vector2(analogX/15f,0.0f);
-			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange*5f))
+			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange))
 			{
 				Position+=proposedChange;
 			}
 			
 			proposedChange = new Vector2(0.0f,-analogY/15f);
-			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange*5f))
+			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange))
 			{
 				Position+=proposedChange;
 			}
