@@ -15,7 +15,7 @@ namespace VitaShooter
 	{
 		public SpriteTile playerBodySprite;
 		
-		
+		public static Player Instance;
 		
 		public Player ()
 		{
@@ -29,7 +29,7 @@ namespace VitaShooter
 			
 			//set up scale,position ect
 			
-			playerBodySprite.CenterSprite(new Vector2(0.5f,0.5f));
+			playerBodySprite.CenterSprite(new Vector2(0.5f,0.6f));
 			
 			playerBodySprite.Scale = new Vector2 (1.5f, 1.5f);
 			

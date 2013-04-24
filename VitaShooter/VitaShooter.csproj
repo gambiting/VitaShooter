@@ -44,6 +44,8 @@
     <Compile Include="MapTile.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="Collisions.cs" />
+    <Compile Include="Bullet.cs" />
+    <Compile Include="AmmoItem.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -71,6 +73,8 @@
     <Content Include="data\tiles\simple3.png" />
     <Content Include="data\tiles\simple4.png" />
     <Content Include="data\tiles\simple5.png" />
+    <Content Include="data\tiles\fire.png" />
+    <Content Include="data\tiles\ammo.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

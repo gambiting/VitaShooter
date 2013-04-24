@@ -136,6 +136,23 @@ namespace VitaShooter
 					wallTiles.Add(mt);
 				}
 			}
+			
+			
+		}
+		
+		public List<MapTile> returnTilesOfType(MapTile.Types t)
+		{
+			List<MapTile> list = new List<MapTile>();
+			
+			foreach(MapTile mt in tiles)
+			{
+				if(mt.type == t)
+				{
+					list.Add(mt);
+				}
+			}
+			
+			return list;
 		}
 		
 		/*

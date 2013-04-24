@@ -23,9 +23,11 @@ namespace VitaShooter
         public Layer Curtains { get; set; }
         public Layer Interface { get; set; }
 		
+		//bullets
+		public List<Bullet> bulletList;
 		
-		//player object
-		public Player player { get; set; }
+		//ammo packs
+		public List<AmmoItem> ammoList;
 		
 		//camera object
 		Camera2D camera;
@@ -66,15 +68,33 @@ namespace VitaShooter
 			//load the map
 			Map.Instance =  new Map();
 			
+			//load the fire texture for the bullet
+			Bullet.fireTexture = new Texture2D( "/Application/data/tiles/fire.png", false );
+			
+			//create the list for bullets
+			bulletList = new List<Bullet>();
+			
+			
+			//create ammo packs
+			ammoList = new List<AmmoItem>();
+			List<MapTile> list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
+			
+			for(int i=0;i<AmmoItem.noOfAmmoToGenerate;i++)
+			{
+				AmmoItem a = new AmmoItem(list[AppMain.random.Next(0,list.Count-1)].position);
+				ammoList.Add(a);
+				World.AddChild(a);
+			}
+			
 			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameTick, 0.0f, false);
 		}
 		
 		public void gameTick(float dt)
 		{
-			if(player == null)
+			if(Player.Instance == null)
 			{
-				player = new Player();
-				World.AddChild(player);
+				Player.Instance = new Player();
+				Foreground.AddChild(Player.Instance);
 				
 				
 				foreach(SpriteList sl in Map.Instance.spriteList)
@@ -86,12 +106,37 @@ namespace VitaShooter
 				setCameraPosition();
 			}
 			
+			//check bullet delay
+			if(Bullet.bulletDelay>0)
+				Bullet.bulletDelay--;
+			
+			//check buttons
+			if(Input2.GamePad0.Cross.Down || Input2.GamePad0.R.Down)
+			{
+				if(Bullet.bulletDelay==0)
+				{
+					Bullet bullet = new Bullet();
+					bulletList.Add(bullet);
+					World.AddChild(bullet);
+					Bullet.bulletDelay=5;
+				}
+			}
+			
+			
+			//check if the player has collected any ammo packs
+			AmmoItem ammoItemToRemove;
+			if(Collisions.checkAmmoPackCollisions(Player.Instance,ammoList, out ammoItemToRemove))
+			{
+				World.RemoveChild(ammoItemToRemove,true);
+				ammoList.Remove(ammoItemToRemove);
+			}
+			
 		}
 		
 		public void setCameraPosition()
 		{
 			//camera.Center = new Vector2((float) System.Math.Round(player.Position.X,1),(float) System.Math.Round(player.Position.Y,1)) ;
-			camera.Center = player.Position;
+			camera.Center = Player.Instance.Position;
 			
 			//camera.Center.
 			

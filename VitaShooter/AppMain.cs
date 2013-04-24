@@ -33,7 +33,7 @@ namespace VitaShooter
 			Director.Initialize();
 
 			Director.Instance.GL.Context.SetClearColor( Colors.Black );
-			Director.Instance.DebugFlags |= DebugFlags.DrawGrid;
+			//Director.Instance.DebugFlags |= DebugFlags.DrawGrid;
 			
 			
 
@@ -69,7 +69,7 @@ namespace VitaShooter
             {
             	timer.Start();
                 SystemEvents.CheckEvents();
-
+				
 
                 Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.SetBlendMode(BlendMode.Normal);
                 Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Update();
@@ -95,7 +95,8 @@ namespace VitaShooter
                 
             	timer.Stop();
                 long ms = timer.ElapsedMilliseconds;
-                System.Console.WriteLine("fps: {0}", 1000/(int)ms);
+				//fps debug printout
+                //System.Console.WriteLine("fps: {0}", 1000/(int)ms);
             	timer.Reset();
 
                 Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SwapBuffers();
@@ -104,6 +105,23 @@ namespace VitaShooter
 			
 		}
 		
+		
+		/*
+		 * taken from sony forums:
+		 * http://community.eu.playstation.com/t5/GameEngine2D/Creating-a-white-Texture2D-programmatically/td-p/18781830
+		 * */
+		public static Texture2D ttCreateTexture( int w, int h, uint color )
+		{
+			Texture2D newTex = new Texture2D( w, h, false, PixelFormat.Rgba );
+			uint[] pix = new uint[w*h];
+				
+			for( int i=0; i<pix.Length; i++ )
+				pix[i] = color;
+				
+			newTex.SetPixels( 0, pix );
+		
+			return( newTex );
+		}
 
 	}
 }
