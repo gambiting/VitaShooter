@@ -1,5 +1,6 @@
+using System;
+using System.IO;
 using System.Collections.Generic;
-
 using Sce.PlayStation.Core;
 using Sce.PlayStation.Core.Graphics;
 using Sce.PlayStation.Core.Environment;
@@ -14,8 +15,9 @@ namespace VitaShooter
 	{
 		
 		public static Game Instance;
-		
 		public Sce.PlayStation.HighLevel.GameEngine2D.Scene Scene { get; set; }
+		
+		
         public Layer Background { get; set; }
         public Layer World { get; set; }
         public Layer EffectsLayer { get; set; }
@@ -61,7 +63,7 @@ namespace VitaShooter
 			camera = Scene.Camera as Camera2D;
 			//camera.SetViewFromWidthAndCenter( 40.0f, Math._00 );
 			
-			camera.SetViewFromHeightAndCenter(10.0f, Math._00);
+			camera.SetViewFromHeightAndCenter(10.0f, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
 			//camera.SetViewFromViewport();
 			
 			
@@ -115,6 +117,7 @@ namespace VitaShooter
 			{
 				if(Bullet.bulletDelay==0)
 				{
+					SoundSystem.Instance.Play("shot.wav");
 					Bullet bullet = new Bullet();
 					bulletList.Add(bullet);
 					World.AddChild(bullet);
@@ -127,6 +130,7 @@ namespace VitaShooter
 			AmmoItem ammoItemToRemove;
 			if(Collisions.checkAmmoPackCollisions(Player.Instance,ammoList, out ammoItemToRemove))
 			{
+				SoundSystem.Instance.Play("ammoclip.wav");
 				World.RemoveChild(ammoItemToRemove,true);
 				ammoList.Remove(ammoItemToRemove);
 			}

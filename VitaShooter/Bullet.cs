@@ -55,6 +55,8 @@ namespace VitaShooter
 			
 			if(Collisions.checkWallsCollisions(this, Map.Instance,step))
 			{
+				SoundSystem.Instance.Play("wallhit2.wav");
+				
 				float scale = 0.5f;
 				Particles fire_node= new Particles( 1 );
 				ParticleSystem fire = fire_node.ParticleSystem;

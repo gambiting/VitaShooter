@@ -6,6 +6,7 @@ using Sce.PlayStation.Core.Graphics;
 using Sce.PlayStation.Core.Environment;
 using Sce.PlayStation.Core.Imaging;	// Font
 using Sce.PlayStation.Core.Input;
+using Sce.PlayStation.Core.Audio;
 
 using Sce.PlayStation.HighLevel.GameEngine2D;
 using Sce.PlayStation.HighLevel.GameEngine2D.Base;
@@ -124,4 +125,53 @@ namespace VitaShooter
 		}
 
 	}
+	
+	
+	public class SoundSystem
+		{
+			public static SoundSystem Instance = new SoundSystem("/Application/data/sounds/");
+
+			public string AssetsPrefix;
+			public Dictionary<string, SoundPlayer> SoundDatabase;
+
+			public SoundSystem(string assets_prefix)
+			{
+				AssetsPrefix = assets_prefix;
+				SoundDatabase = new Dictionary<string, SoundPlayer>();
+			}
+
+			public void CheckCache(string name)
+			{
+				if (SoundDatabase.ContainsKey(name))
+					return;
+
+				var sound = new Sound(AssetsPrefix + name);
+				var player = sound.CreatePlayer();
+				SoundDatabase[name] = player;
+			}
+
+			public void Play(string name)
+			{
+				CheckCache(name);
+
+				// replace any playing instance
+				//SoundDatabase[name].Stop();
+				SoundDatabase[name].Play();
+				SoundDatabase[name].Volume = 0.5f;
+			}
+		
+			public void Stop(string name)
+			{
+				CheckCache(name);
+				SoundDatabase[name].Stop();
+			}
+		
+			public void PlayNoClobber(string name)
+			{
+				CheckCache(name);
+				if (SoundDatabase[name].Status == SoundStatus.Playing)
+					return;
+				SoundDatabase[name].Play();
+			}
+		}
 }

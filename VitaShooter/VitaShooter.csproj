@@ -10,6 +10,7 @@
     <OutputType>Exe</OutputType>
     <RootNamespace>VitaShooter</RootNamespace>
     <AssemblyName>VitaShooter</AssemblyName>
+    <newfilesearch>OnLoadAutoInsert</newfilesearch>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,8 +38,6 @@
     <Reference Include="Sce.PlayStation.HighLevel.GameEngine2D" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppMain.cs" />
-    <Compile Include="Game.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="GameEntity.cs" />
     <Compile Include="MapTile.cs" />
@@ -46,6 +45,8 @@
     <Compile Include="Collisions.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="AmmoItem.cs" />
+    <Compile Include="Game.cs" />
+    <Compile Include="AppMain.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -75,9 +76,19 @@
     <Content Include="data\tiles\simple5.png" />
     <Content Include="data\tiles\fire.png" />
     <Content Include="data\tiles\ammo.png" />
+    <Content Include="data\bkspr01.png" />
+    <Content Include="data\sounds\ammoclip.wav" />
+    <Content Include="data\sounds\wallhit.wav" />
+    <Content Include="data\sounds\shot.wav" />
+    <Content Include="data\sounds\wallhit2.wav" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
     <Folder Include="data\tiles\" />
+    <Folder Include="data\sounds\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="data\tiles\basic.tmx" />
+    <None Include="data\tiles\Untitled-4.psd" />
   </ItemGroup>
 </Project>

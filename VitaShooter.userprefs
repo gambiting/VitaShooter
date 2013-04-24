@@ -1,14 +1,16 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\Map.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\Game.cs">
     <Files>
-      <File FileName="VitaShooter\AppMain.cs" Line="65" Column="48" />
-      <File FileName="VitaShooter\app.xml" Line="1" Column="1" />
-      <File FileName="VitaShooter\Game.cs" Line="63" Column="56" />
-      <File FileName="VitaShooter\Player.cs" Line="78" Column="28" />
-      <File FileName="VitaShooter\GameEntity.cs" Line="24" Column="37" />
-      <File FileName="VitaShooter\MapTile.cs" Line="24" Column="1" />
-      <File FileName="VitaShooter\Map.cs" Line="208" Column="5" />
+      <File FileName="VitaShooter\AppMain.cs" Line="161" Column="5" />
+      <File FileName="VitaShooter\Game.cs" Line="19" Column="46" />
+      <File FileName="VitaShooter\Player.cs" Line="18" Column="33" />
+      <File FileName="VitaShooter\GameEntity.cs" Line="22" Column="4" />
+      <File FileName="VitaShooter\MapTile.cs" Line="30" Column="27" />
+      <File FileName="VitaShooter\Map.cs" Line="140" Column="4" />
+      <File FileName="VitaShooter\Collisions.cs" Line="58" Column="1" />
+      <File FileName="VitaShooter\Bullet.cs" Line="34" Column="4" />
+      <File FileName="VitaShooter\AmmoItem.cs" Line="39" Column="27" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
