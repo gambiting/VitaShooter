@@ -18,7 +18,7 @@ namespace VitaShooter
 		
 		public static int bulletDelay;
 		
-		
+		public static int bulletDamage = 10;
 		
 		public static Texture2D fireTexture;
 		
@@ -26,7 +26,7 @@ namespace VitaShooter
 		{
 			
 			
-			Vector2 startingPosition = Player.Instance.Position;
+			Vector2 startingPosition = Player.Instance.Position+ (new Vector2(0.15f,0.0f).Rotate(Player.Instance.Rotation));
 			
 			Vector2 offsetPosition = new Vector2(0.0f,1.0f);
 			
@@ -42,7 +42,16 @@ namespace VitaShooter
 			SpriteUV sprite = new SpriteUV();
 			sprite.TextureInfo = new TextureInfo(fireTexture);
 			sprite.Scale = new Vector2(0.2f,0.2f);
-			sprite.Color = new Vector4(1.0f,0.6f,0.0f,1.0f);
+			sprite.Color = Colors.White;
+			sprite.CenterSprite(new Vector2(0.5f,0.5f));
+			
+			
+			SpriteUV shadow = new SpriteUV(new TextureInfo(Bullet.fireTexture));
+			shadow.CenterSprite(new Vector2(0.5f,0.5f));
+			shadow.Color = Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.SetAlpha(Colors.Black,0.5f);
+			shadow.Scale = new Vector2(0.6f,0.6f);
+			this.AddChild(shadow);
+			
 			
 			this.AddChild(sprite);
 			
@@ -53,7 +62,7 @@ namespace VitaShooter
 		
 		public override void Tick (float dt)
 		{
-			
+			Enemy tempEnemy;
 			
 			if(Collisions.checkWallsCollisions(this, Map.Instance,step))
 			{
@@ -97,6 +106,10 @@ namespace VitaShooter
 				fire_node.ScheduleInterval((at) => Director.Instance.CurrentScene.RemoveChild(fire_node,true),0.5f,1);
 				
 				this.Parent.RemoveChild(this, true);
+			}else if(Collisions.checkEnemiesCollisions(this, Game.Instance.enemyList, out tempEnemy))
+			{
+				tempEnemy.health-= bulletDamage;
+				this.Parent.RemoveChild(this,true);
 			}else
 			{
 				//move the bullet

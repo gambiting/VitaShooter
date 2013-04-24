@@ -38,7 +38,6 @@ namespace VitaShooter
 			playerBodySprite.Scale = new Vector2 (0.75f,1.5f);
 			
 			
-			
 			this.AddChild (playerBodySprite);
 			
 			Position = new Vector2 (0.0f, 0.0f);

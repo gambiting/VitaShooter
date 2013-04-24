@@ -28,6 +28,7 @@ namespace VitaShooter
 		
 		
 		public static System.Random random = new System.Random();
+		public static Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.RandGenerator rand = new Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.RandGenerator();
 		
 		public static void Main(string[] args)
 		{
@@ -98,6 +99,7 @@ namespace VitaShooter
                 long ms = timer.ElapsedMilliseconds;
 				//fps debug printout
                 //System.Console.WriteLine("fps: {0}", 1000/(int)ms);
+				System.Console.WriteLine("fps: {0}" , (int)(1000/ms));
             	timer.Reset();
 
                 Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SwapBuffers();

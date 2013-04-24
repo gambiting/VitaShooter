@@ -25,6 +25,7 @@ namespace VitaShooter
 			//construct bounds for the coliding object
 			Bounds2 tempBounds2 = new Bounds2(ge.Position + ge.bounds.Min + proposedChange, ge.Position + ge.bounds.Max + proposedChange);
 			
+			
 			foreach(MapTile mt in map.wallTiles)
 			{
 
@@ -74,6 +75,36 @@ namespace VitaShooter
 			
 			ai = null;
 			return false;
+		}
+		
+		public static bool checkEnemiesCollisions(GameEntity ge, List<Enemy> list, out Enemy oe)
+		{
+			//temp bounds
+			Bounds2 tempBounds1 = new Bounds2(ge.Position + ge.bounds.Min, ge.Position + ge.bounds.Max);
+			foreach(Enemy e in list)
+			{
+				//also making the enemy bound box bigger
+				Bounds2 tempBounds2 = new Bounds2(e.Position + e.bounds.Min*2.0f, e.Position + e.bounds.Max*2.0f);
+				
+				if(tempBounds1.Overlaps(tempBounds2))
+				{
+					oe = e;
+					return true;
+				}
+			}
+			
+			oe = null;
+			return false;
+		}
+		
+		
+		public static bool checkCollisionBetweenEntities(GameEntity ge1, GameEntity ge2)
+		{
+			Bounds2 tempBounds1 = new Bounds2(ge1.Position + ge1.bounds.Min, ge1.Position + ge1.bounds.Max);
+			Bounds2 tempBounds2 = new Bounds2(ge2.Position + ge2.bounds.Min, ge2.Position + ge2.bounds.Max);
+			
+			
+			return tempBounds1.Overlaps(tempBounds2);
 		}
 	}
 }

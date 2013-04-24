@@ -36,10 +36,18 @@ namespace VitaShooter
 				sprite.Rotate(0.01f);
 			},-1);
 			
+			SpriteUV shadow = new SpriteUV(new TextureInfo(Bullet.fireTexture));
+			shadow.CenterSprite(new Vector2(0.5f,0.5f));
+			shadow.Color = Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.SetAlpha(Colors.Yellow,0.5f);
+			shadow.Scale = new Vector2(2.0f,2.0f);
+			this.AddChild(shadow);
+			
+			this.AddChild(sprite);
+			
 			bounds = new Bounds2();
 			sprite.GetlContentLocalBounds(ref bounds);
 			
-			this.AddChild(sprite);
+			
 		}
 	}
 }

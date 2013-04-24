@@ -73,8 +73,17 @@ namespace VitaShooter
 			//load the map
 			Map.Instance =  new Map();
 			
+			foreach(SpriteList sl in Map.Instance.spriteList)
+			{
+				Background.AddChild(sl);
+			}
+			
 			//load the fire texture for the bullet
 			Bullet.fireTexture = new Texture2D( "/Application/data/tiles/fire.png", false );
+			
+			
+			Player.Instance = new Player();
+			Foreground.AddChild(Player.Instance);
 			
 			//create the list for bullets
 			bulletList = new List<Bullet>();
@@ -110,14 +119,10 @@ namespace VitaShooter
 		{
 			if(Player.Instance == null)
 			{
-				Player.Instance = new Player();
-				Foreground.AddChild(Player.Instance);
 				
 				
-				foreach(SpriteList sl in Map.Instance.spriteList)
-				{
-					Background.AddChild(sl);
-				}
+				
+				
 			}else
 			{
 				setCameraPosition();
