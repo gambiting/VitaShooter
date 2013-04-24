@@ -15,13 +15,17 @@ namespace VitaShooter
 	{
 		public SpriteTile playerBodySprite;
 		
+		public int animationFrame=0;
+		
 		public static Player Instance;
 		
 		public Player ()
 		{
 			//load the player's sprite
-			var tex1 = new TextureInfo (new Texture2D ("/Application/data/runner2.png", false)
-													, new Vector2i (2, 4));
+			var tex1 = new TextureInfo (new Texture2D ("/Application/data/tiles/machinegun_fire.png", false)
+													, new Vector2i (14,1));
+			
+			tex1.Texture.SetFilter(TextureFilterMode.Disabled);
 			playerBodySprite = new SpriteTile ();
 			playerBodySprite.TextureInfo = tex1;
 			playerBodySprite.TileIndex2D = new Vector2i (0, 0);
@@ -29,9 +33,9 @@ namespace VitaShooter
 			
 			//set up scale,position ect
 			
-			playerBodySprite.CenterSprite(new Vector2(0.5f,0.6f));
+			playerBodySprite.CenterSprite(new Vector2(0.3f,0.1f));
 			
-			playerBodySprite.Scale = new Vector2 (1.5f, 1.5f);
+			playerBodySprite.Scale = new Vector2 (0.75f,1.5f);
 			
 			
 			

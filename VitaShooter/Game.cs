@@ -31,6 +31,9 @@ namespace VitaShooter
 		//ammo packs
 		public List<AmmoItem> ammoList;
 		
+		//enemies
+		public List<Enemy> enemyList;
+		
 		//camera object
 		Camera2D camera;
 		
@@ -88,6 +91,18 @@ namespace VitaShooter
 				World.AddChild(a);
 			}
 			
+			
+			//create enemies
+			enemyList = new List<Enemy>();
+			list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
+			
+			for(int i=0;i<AmmoItem.noOfAmmoToGenerate;i++)
+			{
+				Enemy e = new BasicEnemy(list[AppMain.random.Next(0,list.Count-1)].position);
+				enemyList.Add(e);
+				Foreground.AddChild(e);
+			}
+			
 			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameTick, 0.0f, false);
 		}
 		
@@ -122,8 +137,22 @@ namespace VitaShooter
 					bulletList.Add(bullet);
 					World.AddChild(bullet);
 					Bullet.bulletDelay=5;
+					
+					//update player's sprite
+					Player.Instance.playerBodySprite.TileIndex1D = Player.Instance.animationFrame;
+					Player.Instance.animationFrame = (Player.Instance.animationFrame+1)% Player.Instance.playerBodySprite.TextureInfo.NumTiles.X;
 				}
 			}
+			
+			//check buttons
+			if(Input2.GamePad0.Cross.Release || Input2.GamePad0.R.Release)
+			{
+
+				//update player's sprite
+				Player.Instance.playerBodySprite.TileIndex1D = 0;
+
+			}
+			
 			
 			
 			//check if the player has collected any ammo packs

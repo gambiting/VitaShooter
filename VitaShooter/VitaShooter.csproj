@@ -47,6 +47,8 @@
     <Compile Include="AmmoItem.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="AppMain.cs" />
+    <Compile Include="Enemy.cs" />
+    <Compile Include="BasicEnemy.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -81,6 +83,9 @@
     <Content Include="data\sounds\wallhit.wav" />
     <Content Include="data\sounds\shot.wav" />
     <Content Include="data\sounds\wallhit2.wav" />
+    <Content Include="data\tiles\machinegun_fire.png" />
+    <Content Include="data\tiles\enemy_sword.png" />
+    <Content Include="data\tiles\enemy_sword2.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

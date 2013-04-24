@@ -18,6 +18,8 @@ namespace VitaShooter
 		
 		public static int bulletDelay;
 		
+		
+		
 		public static Texture2D fireTexture;
 		
 		public Bullet ()
@@ -58,10 +60,12 @@ namespace VitaShooter
 				SoundSystem.Instance.Play("wallhit2.wav");
 				
 				float scale = 0.5f;
+				
+				
 				Particles fire_node= new Particles( 1 );
 				ParticleSystem fire = fire_node.ParticleSystem;
+				
 				fire.TextureInfo = new TextureInfo( fireTexture );
-	
 				fire.Emit.Velocity = new Vector2( 0.0f, 0.0f );
 				fire.Emit.VelocityVar = new Vector2( 0.0f, 0.0f );
 				fire.Emit.ForwardMomentum = 0.0f;
@@ -80,7 +84,7 @@ namespace VitaShooter
 				fire.Emit.ScaleEnd = 0.6f * scale;
 				fire.Emit.ScaleEndRelVar = 0.2f;
 				fire.Simulation.Fade = 0.5f;
-				fire_node.ScheduleInterval((at) => Director.Instance.CurrentScene.RemoveChild(fire_node,true),0.5f,1);
+				
 				fire.Emit.Transform = fire_node.GetWorldTransform();        
 				fire.Emit.TransformForVelocityEstimate = fire_node.GetWorldTransform();
 				fire.RenderTransform = Director.Instance.CurrentScene.GetWorldTransform(); // most probably identity
@@ -89,6 +93,8 @@ namespace VitaShooter
 				
 				Director.Instance.CurrentScene.RegisterDisposeOnExit(fire);
 				
+				//remove the particle emmiter after 0.5 seconds
+				fire_node.ScheduleInterval((at) => Director.Instance.CurrentScene.RemoveChild(fire_node,true),0.5f,1);
 				
 				this.Parent.RemoveChild(this, true);
 			}else
