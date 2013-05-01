@@ -12,7 +12,7 @@ namespace VitaShooter
 	public class GameEntity :  Sce.PlayStation.HighLevel.GameEngine2D.Node
 	{
 		
-		public float Health { get; set; }
+		public int Health = 100;
 		public int FrameCount { get; set; }
 		
 		public Bounds2 bounds;

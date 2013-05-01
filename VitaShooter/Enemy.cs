@@ -17,13 +17,21 @@ namespace VitaShooter
 	{
 		public static Texture2D healthBar;
 		
+		public SpriteTile sprite;
+		
 		public int health = 100;
 		
 		public bool attacking = false;
 		public int animationFrame=0;
 		public Vector2 step= new Vector2(0f,0f);
 		
+		public Vector2 randomMovement;
+		
+		public bool isMovingRandomly=false;
+		
 		public SpriteUV healthBarSprite;
+		
+		
 		
 		public Enemy ()
 		{
@@ -41,12 +49,22 @@ namespace VitaShooter
 		
 		public override void Tick (float dt)
 		{
+			
+			//make the health bar proportionally long
 			healthBarSprite.Quad.S = new Vector2(health/100f,0.1f);
 			
+			//move the sprite to the position of this enemy
+			sprite.Position = this.Position;
+			
+			//if health <0 then remove this enemy
 			if(health<=0)
 			{
 				Game.Instance.enemyList.Remove(this);
-				this.Parent.RemoveChild(this,true);
+				Game.Instance.quadTree.removeEntity(this);
+				Game.Instance.enemySpriteList.RemoveChild(this.sprite, true);
+				Game.Instance.EffectsLayer.AddChild(new pointMarker(this.Position));
+				Game.Instance.score+=100;
+				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(this,this.Tick);
 			}
 			
 		}

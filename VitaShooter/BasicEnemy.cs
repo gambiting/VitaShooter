@@ -14,27 +14,21 @@ namespace VitaShooter
 {
 	public class BasicEnemy : Enemy
 	{
-		public SpriteTile sprite;
-		
-		public static int noOfEnemiesToGenerate = 10;
-		
-		public Vector2 randomMovement;
-		
-		public bool isMovingRandomly=false;
 		
 		
-		public BasicEnemy (Vector2 pos)
+		public static int noOfEnemiesToGenerate = 20;
+		
+		
+		public float speedModifier=5.0f;
+		
+		public BasicEnemy (Vector2 pos, TextureInfo tex)
 		{
 			
 			Position = pos;
-			
-			
-			var tex1 = new TextureInfo (new Texture2D ("/Application/data/tiles/enemy_sword2.png", false)
-													, new Vector2i (25,1));
-			
-			tex1.Texture.SetFilter(TextureFilterMode.Disabled);
+
 			sprite = new SpriteTile ();
-			sprite.TextureInfo = tex1;
+			sprite.TextureInfo = tex;
+			sprite.Position = pos;
 			sprite.TileIndex2D = new Vector2i (0, 0);
 			sprite.CenterSprite(new Vector2(0.4f,0.5f));
 			//sprite.Pivot = new Vector2(0.5f,0.5f);
@@ -63,10 +57,10 @@ namespace VitaShooter
 					sprite.TileIndex1D = animationFrame;
 					
 					//if close to the player,then follow,otherwise move randomly
-					if(Player.Instance.Position.Distance(Position) < 4.0f)
+					if(Player.Instance.Position.Distance(sprite.Position) < 6.0f && isViewClear())
 					{
 						isMovingRandomly=false;
-						step = (Player.Instance.Position - Position).Normalize()/30.0f;
+						step = (Player.Instance.Position - sprite.Position).Normalize()/30.0f;
 						
 						//check if should be attacking
 						if(Collisions.checkCollisionBetweenEntities(this,Player.Instance))
@@ -90,41 +84,50 @@ namespace VitaShooter
 					
 					
 				}
+				sprite.Position+=step;
 				
+				
+
 				//only move when not attacking
 				if(!attacking)
 				{
-					Vector2 proposedChange = new Vector2(step.X,0.0f);
-					if(!Collisions.checkWallsCollisions(this, Map.Instance, proposedChange))
+					Vector2 proposedChange = new Vector2(step.X,0.0f)*speedModifier;
+					GameEntity tempEntity;
+					if(!Collisions.checkWallsCollisions(this, Map.Instance, ref proposedChange) && !Collisions.efficientCollisionsCheck(this,proposedChange,out tempEntity))
 					{
-						Position+=proposedChange;
+						Position+=proposedChange/speedModifier;
 					}else if(isMovingRandomly)
 					{
 						randomMovement.X = -randomMovement.X;
 					}
 					
-					proposedChange = new Vector2(0.0f,step.Y);
-					if(!Collisions.checkWallsCollisions(this, Map.Instance, proposedChange))
+					proposedChange = new Vector2(0.0f,step.Y)*speedModifier;
+					if(!Collisions.checkWallsCollisions(this, Map.Instance, ref proposedChange) && !Collisions.efficientCollisionsCheck(this,proposedChange,out tempEntity))
 					{
-						Position+=proposedChange;
-					}else if(isMovingRandomly)
-						
-						
+						Position+=proposedChange/speedModifier;
+					}else if(isMovingRandomly)	
 					{
 						randomMovement.Y = -randomMovement.Y;
 					}
+					
+					
+					Game.Instance.quadTree.removeEntity(this);
+					Game.Instance.quadTree.insert(this);
 				}
+				
+				//test collision detection, done differently
 				
 				//rotate the sprite to face the direction of walking
 				var angleInRadians = -FMath.Atan2 (step.X, step.Y);
 				sprite.Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
 				
 				//correct for the fact that the sprite is rotated in the texture file
-				sprite.Rotation = sprite.Rotation.Rotate(45.0f);
+				sprite.Rotation = sprite.Rotation.Rotate(90.0f);
 				
 				
 				
 			},-1);
+
 			
 			SpriteUV shadow = new SpriteUV(new TextureInfo(Bullet.fireTexture));
 			
@@ -133,8 +136,8 @@ namespace VitaShooter
 			
 			
 			
-			this.AddChild(shadow);
-			this.AddChild(sprite);
+			//this.AddChild(shadow);
+			//this.AddChild(sprite);
 			
 			bounds = new Bounds2();
 			sprite.GetlContentLocalBounds(ref bounds);
@@ -143,6 +146,29 @@ namespace VitaShooter
 			
 			
 		}
+		
+		public bool isViewClear()
+		{
+			Vector2 imaginaryBulletPosition  = this.Position;
+			
+			
+			Vector2 iStep = (Player.Instance.Position - sprite.Position)/10.0f;
+			
+			for(int i=0;i<10;i++)
+			{
+				if(Collisions.checkWallsCollisionsSimple(imaginaryBulletPosition, Map.Instance))
+				{
+					return false;
+				}
+				  
+				imaginaryBulletPosition+= iStep;
+			}
+			
+			
+			return true;
+			
+		}
+		
 	}
 }
 

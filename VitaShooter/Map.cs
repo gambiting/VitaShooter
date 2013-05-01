@@ -212,11 +212,13 @@ namespace VitaShooter
 
 					var sprite = returnSpriteFromTile(tiles[position].type,texture);
 					
-					sprite.CenterSprite(new Vector2(0.5f,0.5f));
+					//sprite.CenterSprite(new Vector2(0.5f,0.5f));
 					
 					//sprite.Scale = new Vector2(2.0f,2.0f);
 					//sprite.Quad.S = new Vector2(2f,2);
-					Vector2 p = new Vector2(x,y) - (new Vector2(m.width,m.height))/2.0f ;
+					Vector2 p = new Vector2(x,y) ;//- (new Vector2(m.width,m.height))/2.0f ;
+					
+					System.Console.WriteLine(p.ToString());
 					
 					//save the tile position in its object
 					tiles[position].position = p;

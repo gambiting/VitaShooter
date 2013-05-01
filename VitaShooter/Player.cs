@@ -19,6 +19,9 @@ namespace VitaShooter
 		
 		public static Player Instance;
 		
+		public int ammo = 100;
+		public int maxAmmo = 100;
+		
 		public Player ()
 		{
 			//load the player's sprite
@@ -29,18 +32,20 @@ namespace VitaShooter
 			playerBodySprite = new SpriteTile ();
 			playerBodySprite.TextureInfo = tex1;
 			playerBodySprite.TileIndex2D = new Vector2i (0, 0);
+			//playerBodySprite.BlendMode = BlendMode.None; //testing only
 			
 			
 			//set up scale,position ect
 			
-			playerBodySprite.CenterSprite(new Vector2(0.3f,0.1f));
+			playerBodySprite.CenterSprite(new Vector2(0.2f,0.1f));
+			
+			playerBodySprite.Pivot= new Vector2(0.08f,0.0f);
 			
 			playerBodySprite.Scale = new Vector2 (0.75f,1.5f);
 			
-			
 			this.AddChild (playerBodySprite);
 			
-			Position = new Vector2 (0.0f, 0.0f);
+			Position = new Vector2 (Map.Instance.width/2.0f, Map.Instance.height/2.0f);
 			
 			//get the local bounds of the sprite
 			bounds = new Bounds2();
@@ -85,6 +90,7 @@ namespace VitaShooter
 			
 			//calculate the position
 			
+			
 			/*if(analogX>0)
 			{
 				Position = new Vector2 (Position.X + 0.1f, Position.Y);
@@ -100,16 +106,22 @@ namespace VitaShooter
 			{
 				Position = new Vector2 (Position.X, Position.Y + 0.1f);
 			}*/
-			Vector2 proposedChange = new Vector2(analogX/15f,0.0f);
-			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange))
+			Vector2 proposedChange;
+			if(analogX!=0.0f)
 			{
-				Position+=proposedChange;
+				proposedChange = new Vector2(analogX/10f,0.0f);
+				if(!Collisions.checkWallsCollisions(this,Map.Instance,ref proposedChange))
+				{
+					Position+=proposedChange;
+				}
 			}
-			
-			proposedChange = new Vector2(0.0f,-analogY/15f);
-			if(!Collisions.checkWallsCollisions(this,Map.Instance,proposedChange))
+			if(analogY!=0.0f)
 			{
-				Position+=proposedChange;
+				proposedChange = new Vector2(0.0f,-analogY/10f);
+				if(!Collisions.checkWallsCollisions(this,Map.Instance,ref proposedChange))
+				{
+					Position+=proposedChange;
+				}
 			}
 			
 				
@@ -117,16 +129,30 @@ namespace VitaShooter
 			//rotate according to the right analog stick, or if it's not moving, then according the the left stick
 			// so basically if you are not pointing the player in any direction with the right stick he is going to point in the walking direction
 			//or if both sticks are not moving,then use the analogX and analogY values(d-pad movement)
+			// OR do autoaim if enabled
 			if (data.AnalogRightX > 0.2f || data.AnalogRightX < -0.2f || data.AnalogRightY > 0.2f || data.AnalogRightY < -0.2f) {
 				var angleInRadians = FMath.Atan2 (-data.AnalogRightX, -data.AnalogRightY);
-				Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
-			} else if (data.AnalogLeftX > 0.2f || data.AnalogLeftX < -0.2f || data.AnalogLeftY > 0.2f || data.AnalogLeftY < -0.2f) {
+				playerBodySprite.Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
+			} else if (!Game.autoAim && (data.AnalogLeftX > 0.2f || data.AnalogLeftX < -0.2f || data.AnalogLeftY > 0.2f || data.AnalogLeftY < -0.2f)) {
 				var angleInRadians = FMath.Atan2 (-data.AnalogLeftX, -data.AnalogLeftY);
-				Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
-			} else if(analogX != 0.0f || analogY != 0.0f)
+				playerBodySprite.Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
+			} else if(!Game.autoAim && (analogX != 0.0f || analogY != 0.0f))
 			{
 				var angleInRadians = FMath.Atan2 (-analogX, -analogY);
-				Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
+				playerBodySprite.Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
+			} else if(Game.autoAim)
+			{
+				GameEntity e;
+				if(Collisions.findNearestEnemy(Player.Instance, 5.0f, out e))
+				{
+					Vector2 distance = (Player.Instance.Position-e.Position).Normalize();
+					var angleInRadians = FMath.Atan2 (distance.X, -distance.Y);
+					playerBodySprite.Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
+				}else
+				{
+					var angleInRadians = FMath.Atan2 (-analogX, -analogY);
+					playerBodySprite.Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
+				}
 			}
 				
 		}

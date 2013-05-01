@@ -49,6 +49,10 @@
     <Compile Include="AppMain.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="BasicEnemy.cs" />
+    <Compile Include="QuadTree.cs" />
+    <Compile Include="pointMarker.cs" />
+    <Compile Include="ammoMarker.cs" />
+    <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -86,6 +90,16 @@
     <Content Include="data\tiles\machinegun_fire.png" />
     <Content Include="data\tiles\enemy_sword.png" />
     <Content Include="data\tiles\enemy_sword2.png" />
+    <Content Include="data\button_autoaimoff.png" />
+    <Content Include="data\button_autoaimon.png" />
+    <Content Include="data\button_newgame.png" />
+    <Content Include="data\button_tutorial.png" />
+    <Content Include="data\logo.png" />
+    <Content Include="data\sounds\DST-Darkseid.mp3" />
+    <Content Include="data\points100.png" />
+    <Content Include="data\plusammo.png" />
+    <Content Include="data\data-latin.ttf" />
+    <Content Include="data\heart.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
@@ -95,5 +109,6 @@
   <ItemGroup>
     <None Include="data\tiles\basic.tmx" />
     <None Include="data\tiles\Untitled-4.psd" />
+    <None Include="data\tiles\enemy_sword.psd" />
   </ItemGroup>
 </Project>

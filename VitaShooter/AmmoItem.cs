@@ -28,8 +28,8 @@ namespace VitaShooter
 			SpriteUV sprite = new SpriteUV();
 			sprite.TextureInfo = new TextureInfo(ammoTexture);
 			sprite.Scale = new Vector2(0.5f,0.5f);
-			sprite.CenterSprite(new Vector2(0.5f,0.5f));
-			
+			//sprite.CenterSprite(new Vector2(0.5f,0.5f));
+			sprite.Pivot = new Vector2(0.5f,0.5f);
 			sprite.Rotation = sprite.Rotation.Rotate(AppMain.random.Next(-180,180));
 			
 			sprite.Schedule((dt) => {
@@ -37,9 +37,10 @@ namespace VitaShooter
 			},-1);
 			
 			SpriteUV shadow = new SpriteUV(new TextureInfo(Bullet.fireTexture));
-			shadow.CenterSprite(new Vector2(0.5f,0.5f));
+			shadow.CenterSprite(new Vector2(0.25f,0.25f));
 			shadow.Color = Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.SetAlpha(Colors.Yellow,0.5f);
 			shadow.Scale = new Vector2(2.0f,2.0f);
+			
 			this.AddChild(shadow);
 			
 			this.AddChild(sprite);

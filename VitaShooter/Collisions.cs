@@ -20,36 +20,30 @@ namespace VitaShooter
 		
 		
 		
-		public static bool checkWallsCollisions(GameEntity ge, Map map, Vector2 proposedChange)
+		public static bool checkWallsCollisions(GameEntity ge, Map map, ref Vector2 proposedChange)
 		{
-			//construct bounds for the coliding object
-			Bounds2 tempBounds2 = new Bounds2(ge.Position + ge.bounds.Min + proposedChange, ge.Position + ge.bounds.Max + proposedChange);
 			
+			//alternative,experimental method
+			int position = ((int)System.Math.Floor(ge.Position.Y+proposedChange.Y)*map.width)+(int)System.Math.Floor(ge.Position.X+proposedChange.X);
 			
-			foreach(MapTile mt in map.wallTiles)
+			if(map.tiles[position].type == MapTile.Types.wall)
 			{
-
-				//construct bounds for the wall
-				Bounds2 tempBounds1 = new Bounds2(mt.position + mt.bounds.Min ,mt.position + mt.bounds.Max);
-			
-				
-				
-				//check if overlap exists, if yes,return true
-				if(tempBounds1.Overlaps(tempBounds2))
-				{
-					return true;
-				}
-
+				return true;
 			}
+
+			return false;
+		}
+		
+		
+		public static bool checkWallsCollisionsSimple(Vector2 location, Map map)
+		{
+			int position = ((int)System.Math.Floor(location.Y)*map.width)+(int)System.Math.Floor(location.X);
 			
-			
-			
-			//Bounds2 box = new Bounds2();
-			//ge.Children[0].GetContentWorldBounds(ref box);
-			
-			//System.Console.WriteLine(box.ToString());
-			
-			
+			if(map.tiles[position].type == MapTile.Types.wall)
+			{
+				return true;
+			}
+
 			return false;
 		}
 		
@@ -77,12 +71,32 @@ namespace VitaShooter
 			return false;
 		}
 		
-		public static bool checkEnemiesCollisions(GameEntity ge, List<Enemy> list, out Enemy oe)
+		public static bool efficientCollisionsCheck(GameEntity ge, Vector2 proposedChange, out GameEntity oge)
+		{
+			
+			AABB tempRange;
+			
+			tempRange.center = ge.Position + proposedChange.Normalize();
+			tempRange.halfDimension = new Vector2(0.4f,0.4f);
+			GameEntity e = Game.Instance.quadTree.queryRange(tempRange);
+			
+			
+			oge = null;
+			
+			if(e == null || e.Equals(ge)  ) return false;
+			else return true;
+		}
+		
+		public static bool checkEnemiesCollisions(GameEntity ge, List<Enemy> list, Vector2 proposedChange, out Enemy oe)
 		{
 			//temp bounds
-			Bounds2 tempBounds1 = new Bounds2(ge.Position + ge.bounds.Min, ge.Position + ge.bounds.Max);
+			Bounds2 tempBounds1 = new Bounds2(ge.Position + proposedChange + ge.bounds.Min, ge.Position + proposedChange + ge.bounds.Max);
 			foreach(Enemy e in list)
 			{
+				if(ge.GetType() == typeof(BasicEnemy) && e.Equals(ge))
+				{
+					continue;
+				}
 				//also making the enemy bound box bigger
 				Bounds2 tempBounds2 = new Bounds2(e.Position + e.bounds.Min*2.0f, e.Position + e.bounds.Max*2.0f);
 				
@@ -95,6 +109,41 @@ namespace VitaShooter
 			
 			oe = null;
 			return false;
+		}
+		
+		public static bool findNearestEnemy(GameEntity ge, float range, out GameEntity oge)
+		{
+			
+			
+			AABB tempRange;
+			
+			tempRange.center = ge.Position;
+			tempRange.halfDimension = new Vector2(range,range);
+			
+			
+			List<GameEntity> tempList = Game.Instance.quadTree.queryRangeList(tempRange);
+			
+			GameEntity temp;
+			
+			if(tempList.Count>0)
+			{
+				temp = tempList[0];
+			}else
+			{
+				oge = null;
+				return false;
+			}
+			
+			foreach(GameEntity g in tempList)
+			{
+				if(g.Position.DistanceSquared(ge.Position) < temp.Position.DistanceSquared(ge.Position))
+				{
+					temp = g;
+				}
+			}
+			
+			oge = temp;
+			return true;
 		}
 		
 		

@@ -1,16 +1,22 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Release" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\Game.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\UI.cs">
     <Files>
-      <File FileName="VitaShooter\AppMain.cs" Line="161" Column="5" />
-      <File FileName="VitaShooter\Game.cs" Line="19" Column="46" />
-      <File FileName="VitaShooter\Player.cs" Line="18" Column="33" />
-      <File FileName="VitaShooter\GameEntity.cs" Line="22" Column="4" />
-      <File FileName="VitaShooter\MapTile.cs" Line="30" Column="27" />
-      <File FileName="VitaShooter\Map.cs" Line="140" Column="4" />
-      <File FileName="VitaShooter\Collisions.cs" Line="58" Column="1" />
-      <File FileName="VitaShooter\Bullet.cs" Line="34" Column="4" />
-      <File FileName="VitaShooter\AmmoItem.cs" Line="39" Column="27" />
+      <File FileName="VitaShooter\AppMain.cs" Line="85" Column="73" />
+      <File FileName="VitaShooter\Player.cs" Line="23" Column="28" />
+      <File FileName="VitaShooter\GameEntity.cs" Line="21" Column="4" />
+      <File FileName="VitaShooter\MapTile.cs" Line="31" Column="4" />
+      <File FileName="VitaShooter\Map.cs" Line="176" Column="4" />
+      <File FileName="VitaShooter\Collisions.cs" Line="41" Column="4" />
+      <File FileName="VitaShooter\Bullet.cs" Line="48" Column="4" />
+      <File FileName="VitaShooter\AmmoItem.cs" Line="45" Column="4" />
+      <File FileName="VitaShooter\Game.cs" Line="61" Column="22" />
+      <File FileName="VitaShooter\Enemy.cs" Line="40" Column="49" />
+      <File FileName="VitaShooter\BasicEnemy.cs" Line="19" Column="47" />
+      <File FileName="VitaShooter\QuadTree.cs" Line="225" Column="4" />
+      <File FileName="VitaShooter\pointMarker.cs" Line="39" Column="5" />
+      <File FileName="VitaShooter\ammoMarker.cs" Line="31" Column="4" />
+      <File FileName="VitaShooter\UI.cs" Line="73" Column="83" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
