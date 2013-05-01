@@ -21,6 +21,10 @@ namespace VitaShooter
 		
 		public float speedModifier=5.0f;
 		
+		public float damageDelay=10;
+		
+		public int damage=1;
+		
 		public BasicEnemy (Vector2 pos, TextureInfo tex)
 		{
 			
@@ -46,6 +50,10 @@ namespace VitaShooter
 					//if attacking,use all animation frames
 					if(attacking)
 					{
+						//deal damage to the player
+						if(FrameCount%damageDelay==0) Player.Instance.Health-=damage;
+						
+						
 						animationFrame = (animationFrame+1) % 25;
 					}else
 					{
@@ -60,7 +68,7 @@ namespace VitaShooter
 					if(Player.Instance.Position.Distance(sprite.Position) < 6.0f && isViewClear())
 					{
 						isMovingRandomly=false;
-						step = (Player.Instance.Position - sprite.Position).Normalize()/30.0f;
+						step = (Player.Instance.Position - sprite.Position).Normalize()/15.0f;
 						
 						//check if should be attacking
 						if(Collisions.checkCollisionBetweenEntities(this,Player.Instance))

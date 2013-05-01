@@ -35,7 +35,7 @@ namespace VitaShooter
 			Position = startingPosition+offsetPosition;
 			
 			//step the bullet takes each tick
-			step = (Position - startingPosition);
+			step = (Position - startingPosition)*1.5f;
 			
 			Texture2D bulletTexture = AppMain.ttCreateTexture(1,1, 0xff00ffff);
 			

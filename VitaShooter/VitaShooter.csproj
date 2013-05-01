@@ -53,6 +53,7 @@
     <Compile Include="pointMarker.cs" />
     <Compile Include="ammoMarker.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="EnemySpawnPoint.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -100,6 +101,13 @@
     <Content Include="data\plusammo.png" />
     <Content Include="data\data-latin.ttf" />
     <Content Include="data\heart.png" />
+    <Content Include="data\coin.png" />
+    <Content Include="data\tut1.png" />
+    <Content Include="data\tut2.png" />
+    <Content Include="data\tut3.png" />
+    <Content Include="data\tut4.png" />
+    <Content Include="data\tut5.png" />
+    <Content Include="data\gameover.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

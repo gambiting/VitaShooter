@@ -143,7 +143,7 @@ namespace VitaShooter
 			} else if(Game.autoAim)
 			{
 				GameEntity e;
-				if(Collisions.findNearestEnemy(Player.Instance, 5.0f, out e))
+				if(Collisions.findNearestEnemy(Player.Instance, 8.0f, out e))
 				{
 					Vector2 distance = (Player.Instance.Position-e.Position).Normalize();
 					var angleInRadians = FMath.Atan2 (distance.X, -distance.Y);

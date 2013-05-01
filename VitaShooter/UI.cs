@@ -25,6 +25,8 @@ namespace VitaShooter
 		
 		public SpriteUV heartIcon;
 		
+		public SpriteUV coinIcon;
+		
 		public UI ()
 		{
 			cameraOffset = new Vector2(-8.5f,-4.8f);
@@ -45,6 +47,10 @@ namespace VitaShooter
 			heartIcon = new SpriteUV(heartIconInfo);
 			heartIcon.Scale = new Vector2(0.6f,0.5f);
 			
+			TextureInfo coinIconInfo = new TextureInfo("/Application/data/coin.png");
+			coinIcon = new SpriteUV(coinIconInfo);
+			coinIcon.Scale = new Vector2(0.6f,0.6f);
+			
 			Font f = new Font("/Application/data/data-latin.ttf",15, FontStyle.Bold);
 			FontMap fm = new FontMap(f);
 			
@@ -59,6 +65,7 @@ namespace VitaShooter
 			this.AddChild(bottomBar);
 			this.AddChild(ammoIcon);
 			this.AddChild(heartIcon);
+			this.AddChild(coinIcon);
 			this.AddChild(this.ammoLabel);
 			this.AddChild (this.healthLabel);
 			this.AddChild(this.scoreLabel);
@@ -70,13 +77,14 @@ namespace VitaShooter
 			
 			bottomBar.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(-1.0f,-1.2f);
 			ammoIcon.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(-0.1f,0.0f);
-			heartIcon.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(5.3f,0.0f);
+			heartIcon.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(6.3f,0.0f);
+			coinIcon.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(11.5f,0.0f);
 			
 			ammoLabel.Text = "Ammo: " + Player.Instance.ammo + "/" + Player.Instance.maxAmmo;
 			ammoLabel.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(0.5f,0.0f);  //new Vector2(-2.0f,4.0f);
 			
 			healthLabel.Text = "Health: " + Player.Instance.Health;
-			healthLabel.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(6.0f,0.0f); //+ new Vector2(2.0f,-2.0f);  //new Vector2(-2.0f,4.0f);
+			healthLabel.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(7.0f,0.0f); //+ new Vector2(2.0f,-2.0f);  //new Vector2(-2.0f,4.0f);
 			
 			scoreLabel.Text = "Score: " + Game.Instance.score ;
 			scoreLabel.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(12f,0.0f);

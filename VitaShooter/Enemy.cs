@@ -59,14 +59,30 @@ namespace VitaShooter
 			//if health <0 then remove this enemy
 			if(health<=0)
 			{
+				this.RemoveChild(healthBarSprite,true);
 				Game.Instance.enemyList.Remove(this);
 				Game.Instance.quadTree.removeEntity(this);
 				Game.Instance.enemySpriteList.RemoveChild(this.sprite, true);
 				Game.Instance.EffectsLayer.AddChild(new pointMarker(this.Position));
 				Game.Instance.score+=100;
 				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(this,this.Tick);
+				
+				
+				drop();
 			}
 			
+		}
+		
+		public void drop()
+		{
+			if(AppMain.random.Next(0,10)<2)
+			{
+
+				AmmoItem a = new AmmoItem(this.Position);
+				Game.Instance.ammoList.Add(a);
+				Game.Instance.World.AddChild(a);
+
+			}
 		}
 	}
 }

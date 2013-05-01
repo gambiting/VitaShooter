@@ -22,7 +22,6 @@ namespace VitaShooter
         public Layer World { get; set; }
         public Layer EffectsLayer { get; set; }
         public Layer Foreground { get; set; }
-        public Layer Curtains { get; set; }
         public Layer Interface { get; set; }
 		
 		
@@ -31,6 +30,15 @@ namespace VitaShooter
 		SpriteUV sprite_button_newgame;
 		SpriteUV sprite_button_tutorial;
 		SpriteUV sprite_button_autoaim;
+		
+		
+		//tutorial sprites
+		SpriteUV tut1;
+		
+		//sprite for gameover screen
+		SpriteUV gameoverSprite;
+		
+		Label gameoverLabel = new Label();
 		
 		//menu background
 		SpriteList menuBackground;
@@ -60,6 +68,7 @@ namespace VitaShooter
 		
 		public int score=0;
 		
+		public int tutorialProgress=0;
 		
 		public static bool autoAim = true;
 		
@@ -91,12 +100,97 @@ namespace VitaShooter
 			camera.SetViewFromHeightAndCenter(10.0f, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
 			//camera.SetViewFromViewport();
 			
-			
+			//initGameOver();
 			initTitle();
+			//initTutorial();
 			
 			MusicSystem.Instance.Play("DST-Darkseid.mp3");
 			
 			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, titleTick, 0.0f, false);
+		}
+		
+		public void initTutorial()
+		{
+			camera.SetViewFromViewport();
+			
+			tut1 = new SpriteUV(new TextureInfo("/Application/data/tut1.png"));
+			tut1.Scale = tut1.TextureInfo.TextureSizef;
+			Foreground.AddChild(tut1);
+		}
+		
+		public void tutorialTick(float dt)
+		{
+			
+			
+			
+			if(Input2.GamePad0.Cross.Press)
+			{
+				switch(tutorialProgress)
+				{
+				case 1:
+					tut1.TextureInfo = new TextureInfo("/Application/data/tut2.png");
+					break;
+				case 2:
+					tut1.TextureInfo = new TextureInfo("/Application/data/tut3.png");
+					break;
+				case 3:
+					tut1.TextureInfo = new TextureInfo("/Application/data/tut4.png");
+					break;
+				case 4:
+					tut1.TextureInfo = new TextureInfo("/Application/data/tut5.png");
+					break;
+				case 5:
+					Foreground.RemoveAllChildren(true);
+					tutorialProgress=-1;
+					initTitle();
+					Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, tutorialTick);
+					Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, titleTick, 0.0f, false);
+					break;
+					
+				}
+				tutorialProgress++;	
+			}
+			
+		}
+		
+		public void initGameOver()
+		{
+			camera.SetViewFromViewport();
+			gameoverSprite = new SpriteUV(new TextureInfo("/Application/data/gameover.png"));
+			gameoverSprite.Scale = gameoverSprite.TextureInfo.TextureSizef;
+			gameoverSprite.Position = new Vector2(300f,544.0f/2.0f- gameoverSprite.TextureInfo.TextureSizef.Y+ 80f);
+			
+			gameoverLabel.Text = "Your final score was: " + Game.Instance.score + "\nPress X to try again\nO to return to menu";
+			gameoverLabel.Position = new Vector2(330f, 200.0f);
+			
+			Font f = new Font("/Application/data/data-latin.ttf",25, FontStyle.Bold);
+			FontMap fm = new FontMap(f);
+			gameoverLabel.FontMap = fm;
+			
+			Foreground.AddChild(gameoverSprite);
+			Foreground.AddChild(gameoverLabel);
+			
+			score = 0;
+		}
+		
+		public void gameoverTick(float dt)
+		{
+			if(Input2.GamePad0.Cross.Press)
+			{
+				Foreground.RemoveAllChildren(true);
+				
+				initGame();
+				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, gameoverTick);
+				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameTick, 0.0f, false);
+			}
+			if(Input2.GamePad0.Circle.Press)
+			{
+				Foreground.RemoveAllChildren(true);
+				
+				initTitle();
+				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, gameoverTick);
+				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, titleTick, 0.0f, false);
+			}
 		}
 		
 		public void initTitle()
@@ -167,7 +261,11 @@ namespace VitaShooter
 					Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameTick, 0.0f, false);
 				}else if(menuSelection==1)
 				{
-					
+					Foreground.RemoveAllChildren(true);
+					Background.RemoveAllChildren(true);
+					initTutorial();
+					Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, titleTick);
+					Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, tutorialTick, 0.0f, false);
 				}else if(menuSelection==2)
 				{
 					if(Game.autoAim)
@@ -229,6 +327,21 @@ namespace VitaShooter
 		
 		public void initGame()
 		{
+			
+			Scene.RemoveAllChildren(true);
+			//create layers for everyting
+            Background = new Layer();
+            World = new Layer();
+            EffectsLayer = new Layer();
+            Foreground = new Layer();
+            Interface = new Layer();
+			
+			//add layers to the scene
+			Scene.AddChild(Background);
+            Scene.AddChild(World);
+            Scene.AddChild(Foreground);
+			Scene.AddChild(EffectsLayer);
+            Scene.AddChild(Interface);
 			
 			camera.SetViewFromHeightAndCenter(10.0f, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
 			//camera.SetViewFromViewport();
@@ -306,6 +419,20 @@ namespace VitaShooter
 			
 			ui = new UI();
 			Interface.AddChild(ui);
+			
+			
+			//add enemy spawners
+			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, (dt) => {
+				list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
+			
+					EnemySpawnPoint esp = new EnemySpawnPoint(list[AppMain.random.Next(0,list.Count-1)].position);
+
+
+					World.AddChild(esp);
+
+
+			;}, 1.0f,false, -1);
+			
 		}
 		
 		public void gameTick(float dt)
@@ -334,7 +461,7 @@ namespace VitaShooter
 					Bullet bullet = new Bullet();
 					bulletList.Add(bullet);
 					World.AddChild(bullet);
-					Bullet.bulletDelay=3;
+					Bullet.bulletDelay=2;
 					Player.Instance.ammo--;
 					
 					//update player's sprite
@@ -367,78 +494,24 @@ namespace VitaShooter
 			}
 			
 			
-			//update enemy positions TEST
-			/*foreach(Enemy e in enemyList)
-			{
-				if(Common.FrameCount%2==0)
-				{
-					if(e.attacking)
-					{
-						e.animationFrame = (e.animationFrame+1) % 25;
-					}else
-					{
-						//if not,then use first three animation frames
-						e.animationFrame = (e.animationFrame+1) % 4;
-						
-					}
-					//assign the correct tileindex
-					e.sprite.TileIndex1D = e.animationFrame;
-				}
-				
-				if(Player.Instance.Position.Distance(e.sprite.Position) < 4.0f)
-				{
-					e.isMovingRandomly=false;
-					e.step = (Player.Instance.Position - e.sprite.Position).Normalize()/30.0f;
-					
-					//check if should be attacking
-					if(Collisions.checkCollisionBetweenEntities(e,Player.Instance))
-					{
-						if(e.attacking==false)
-						{
-							e.attacking=true;
-							//manualy skip the frames
-							e.animationFrame=4;
-						}
-						
-					}else
-					{
-						e.attacking=false;
-					}
-				}else{
-					e.isMovingRandomly=true;
-					e.step = e.randomMovement;
-				}
-				
-				
-				if(!e.attacking)
-				{
-					Vector2 proposedChange = new Vector2(e.step.X,0.0f);
-					if(!Collisions.checkWallsCollisions(e, Map.Instance, ref proposedChange))
-					{
-						e.Position+=proposedChange;
-					}else if(e.isMovingRandomly)
-					{
-						e.randomMovement.X = -e.randomMovement.X;
-					}
-					
-					proposedChange = new Vector2(0.0f,e.step.Y);
-					if(!Collisions.checkWallsCollisions(e, Map.Instance, ref proposedChange))
-					{
-						e.Position+=proposedChange;
-					}else if(e.isMovingRandomly)	
-					{
-						e.randomMovement.Y = -e.randomMovement.Y;
-					}
-				}
-				
-				var angleInRadians = -FMath.Atan2 (e.step.X, e.step.Y);
-				e.sprite.Rotation = new Vector2 (FMath.Cos (angleInRadians), FMath.Sin (angleInRadians));
-				
-				//correct for the fact that the sprite is rotated in the texture file
-				e.sprite.Rotation = e.sprite.Rotation.Rotate(45.0f);
-				
-			}*/
 			
+			
+			if(Player.Instance.Health<=0)
+			{
+				Background.RemoveAllChildren(true);
+				Foreground.RemoveAllChildren(true);
+				EffectsLayer.RemoveAllChildren(true);
+				World.RemoveAllChildren(true);
+				Interface.RemoveAllChildren(true);
+				
+				
+				
+				initGameOver();
+				
+				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, gameTick);
+				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameoverTick, 0.0f, false);
+				
+			}
 		}
 		
 		public void setCameraPosition()
@@ -456,35 +529,7 @@ namespace VitaShooter
 		// NOTE: no delta time, frame specific
 		public void FrameUpdate()
 		{
-			/*Collider.Collide();
-			
-			foreach (GameEntity e in RemoveQueue)
-				World.RemoveChild(e,true);
-			foreach (GameEntity e in AddQueue)
-				World.AddChild(e);
-				
-			RemoveQueue.Clear();
-			AddQueue.Clear();
-			
-			// is player dead?
-			if (PlayerDead)
-			{
-				if (PlayerInput.AnyButton())
-				{
-					// ui will transition to title mode
-					World.RemoveAllChildren(true);
-					Collider.Clear();
-					PlayerDead = false;
-					
-					// hide UI and then null player to swap back to title
-					UI.HangDownTarget = -1.0f;
-					UI.HangDownSpeed = 0.175f;
-					var sequence = new Sequence();
-					sequence.Add(new DelayTime() { Duration = 0.4f });
-					sequence.Add(new CallFunc(() => this.Player = null));
-					World.RunAction(sequence);
-				}
-			}*/
+
 		}
 	}
 }
