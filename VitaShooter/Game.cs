@@ -491,6 +491,8 @@ namespace VitaShooter
 				ammoList.Remove(ammoItemToRemove);
 				
 				Player.Instance.ammo = (int)FMath.Clamp((Player.Instance.ammo+50),100,100);
+				
+				ammoItemToRemove.Die();
 			}
 			
 			

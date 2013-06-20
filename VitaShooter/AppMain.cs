@@ -109,7 +109,7 @@ namespace VitaShooter
 				
 				int fps = (int)(1000/ms);
 				System.Console.WriteLine("fps: {0}" , fps);
-				
+				System.Console.WriteLine("Memory in use in KBytes: " + System.GC.GetTotalMemory(false)/1024);
 				
             	timer.Reset();
 

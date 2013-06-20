@@ -65,7 +65,7 @@ namespace VitaShooter
 				Game.Instance.enemySpriteList.RemoveChild(this.sprite, true);
 				Game.Instance.EffectsLayer.AddChild(new pointMarker(this.Position));
 				Game.Instance.score+=100;
-				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(this,this.Tick);
+				this.Die();
 				
 				
 				drop();

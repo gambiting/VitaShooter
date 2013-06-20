@@ -57,7 +57,7 @@ namespace VitaShooter
 				if(spawnSprite.Color.W==0.0f)
 				{
 					Game.Instance.World.RemoveChild(this,true);
-					Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(this,this.Tick);
+					this.Die ();
 				}
 			}
 			

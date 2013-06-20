@@ -22,6 +22,8 @@ namespace VitaShooter
 		
 		public static Texture2D fireTexture;
 		
+		public static Texture2D bulletTexture;
+		
 		public Bullet ()
 		{
 			
@@ -31,13 +33,13 @@ namespace VitaShooter
 			Vector2 offsetPosition = new Vector2(0.0f,0.5f);
 			
 			offsetPosition = offsetPosition.Rotate(Player.Instance.playerBodySprite.Rotation);
-			
 			Position = startingPosition+offsetPosition;
 			
 			//step the bullet takes each tick
 			step = (Position - startingPosition)*1.5f;
 			
-			Texture2D bulletTexture = AppMain.ttCreateTexture(1,1, 0xff00ffff);
+			if(Bullet.bulletTexture == null)
+				Bullet.bulletTexture = AppMain.ttCreateTexture(1,1, 0xff00ffff);
 			
 			SpriteUV sprite = new SpriteUV();
 			sprite.TextureInfo = new TextureInfo(fireTexture);
@@ -118,6 +120,8 @@ namespace VitaShooter
 				Game.Instance.Background.AddChild(bulletHole);
 				
 				this.Parent.RemoveChild(this, true);
+				
+				this.Die();
 			}else if(Collisions.checkEnemiesCollisions(this, Game.Instance.enemyList, step,  out tempEnemy))
 			{
 				tempEnemy.health-= bulletDamage;
@@ -160,6 +164,8 @@ namespace VitaShooter
 				fire_node.ScheduleInterval((at) => Director.Instance.CurrentScene.RemoveChild(fire_node,true),0.5f,1);
 				
 				this.Parent.RemoveChild(this,true);
+				
+				this.Die();
 			}else
 			{
 				//move the bullet

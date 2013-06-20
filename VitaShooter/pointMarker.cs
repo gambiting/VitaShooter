@@ -34,8 +34,8 @@ namespace VitaShooter
 			this.sprite.Color = Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.SetAlpha(Colors.White,sprite.Color.W-0.05f);
 			if(sprite.Color.W<=0.0f) 
 			{	
-				Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(this,this.Tick);
 				Game.Instance.EffectsLayer.RemoveChild(this,true);
+				this.Die();
 			}
 
 			

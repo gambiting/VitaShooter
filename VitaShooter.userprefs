@@ -10,7 +10,7 @@
       <File FileName="VitaShooter\Collisions.cs" Line="41" Column="4" />
       <File FileName="VitaShooter\Bullet.cs" Line="33" Column="45" />
       <File FileName="VitaShooter\AmmoItem.cs" Line="45" Column="4" />
-      <File FileName="VitaShooter\Game.cs" Line="320" Column="61" />
+      <File FileName="VitaShooter\Game.cs" Line="322" Column="5" />
       <File FileName="VitaShooter\Enemy.cs" Line="37" Column="4" />
       <File FileName="VitaShooter\BasicEnemy.cs" Line="1" Column="1" />
       <File FileName="VitaShooter\QuadTree.cs" Line="225" Column="4" />

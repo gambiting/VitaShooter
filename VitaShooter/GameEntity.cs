@@ -27,6 +27,11 @@ namespace VitaShooter
 		{
 			FrameCount += 1;
 		} 
+		
+		public void Die()
+		{
+			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(this,this.Tick);
+		}
 	}
 }
 
