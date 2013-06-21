@@ -13,10 +13,14 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
+	/*
+	 * Class representing the "+ammo" sign left after collecting an ammo pack
+	 */ 
 	public class ammoMarker : GameEntity
 	{
 		SpriteUV sprite;
 		public static Texture2D texture;
+		
 		public ammoMarker (Vector2 position)
 		{
 			this.Position = position+new Vector2(0.0f,0.5f);
