@@ -35,8 +35,10 @@ namespace VitaShooter
 		
 		public override void Tick (float dt)
 		{
+			//if the enemy for this spawn point has not been inserted yet, increase the alpha value
 			if(!this.inserted) spawnSprite.Color = Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.SetAlpha(Colors.Red,spawnSprite.Color.W+0.01f);
 			
+			//once the alpha value reaches 1.0, insert an enemy, set inserted to true
 			if(spawnSprite.Color.W>=1.0f)
 			{
 				
@@ -50,6 +52,8 @@ namespace VitaShooter
 				
 				this.inserted=true;
 			}
+			
+			//once the enemy has been inserted, slowly disappear
 			if(this.inserted)
 			{
 				spawnSprite.Color = Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.SetAlpha(Colors.Red,spawnSprite.Color.W-0.05f);

@@ -12,13 +12,18 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
-	
+	/*
+	 * Class representing enemies
+	 * there should be no instances of this class - any class representing actual enemies should inherit from this class
+	 * */
 	public class Enemy: GameEntity
 	{
 		public static Texture2D healthBar;
 		
 		public SpriteTile sprite;
 		
+		//basic health
+		//TODO - improve or put somewhere else
 		public int health = 100;
 		
 		public bool attacking = false;
@@ -35,6 +40,8 @@ namespace VitaShooter
 		
 		public Enemy ()
 		{
+			
+			//creates a texture for the health bar
 			healthBar = AppMain.ttCreateTexture(16,1,0xff00ff00);
 			
 			TextureInfo tex = new TextureInfo(healthBar);

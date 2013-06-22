@@ -92,17 +92,11 @@ namespace VitaShooter
 			Scene.AddChild(EffectsLayer);
             Scene.AddChild(Interface);
 			
-
-			//Vector2 ideal_screen_size = new Vector2(960.0f, 544.0f);
 			camera = Scene.Camera as Camera2D;
-			//camera.SetViewFromWidthAndCenter( 40.0f, Math._00 );
 			
 			camera.SetViewFromHeightAndCenter(10.0f, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
-			//camera.SetViewFromViewport();
-			
-			//initGameOver();
+
 			initTitle();
-			//initTutorial();
 			
 			MusicSystem.Instance.Play("DST-Darkseid.mp3");
 			
@@ -232,6 +226,8 @@ namespace VitaShooter
 			int menuBackgroundWidth=100;
 			int menuBackgroundHeight=50;
 			
+			
+			//mini background discofloor
 			for(int x=0;x<30;x++)
 			{
 				for(int y=0;y<17;y++)
@@ -327,8 +323,12 @@ namespace VitaShooter
 		
 		public void initGame()
 		{
-			
+			//empty the scene
 			Scene.RemoveAllChildren(true);
+			
+			//unschedule everything
+			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.UnscheduleAll();
+			
 			//create layers for everyting
             Background = new Layer();
             World = new Layer();
@@ -343,11 +343,13 @@ namespace VitaShooter
 			Scene.AddChild(EffectsLayer);
             Scene.AddChild(Interface);
 			
+			//set view close to the scene
 			camera.SetViewFromHeightAndCenter(10.0f, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
-			//camera.SetViewFromViewport();
-			//load the map
+			
+			//create a new map
 			Map.Instance =  new Map();
 			
+			//add all sprites loaded from the map
 			foreach(SpriteList sl in Map.Instance.spriteList)
 			{
 				Background.AddChild(sl);
@@ -362,18 +364,17 @@ namespace VitaShooter
 			//texture for the ammo marker
 			ammoMarker.texture = new Texture2D("/Application/data/plusammo.png", false);
 			
-			
 			Player.Instance = new Player();
 			Foreground.AddChild(Player.Instance);
 			
 			//create the list for bullets
 			bulletList = new List<Bullet>();
 			
-			
 			//create ammo packs
 			ammoList = new List<AmmoItem>();
 			List<MapTile> list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
 			
+			//add a specified number of ammo packs
 			for(int i=0;i<AmmoItem.noOfAmmoToGenerate;i++)
 			{
 				AmmoItem a = new AmmoItem(list[AppMain.random.Next(0,list.Count-1)].position);
@@ -383,7 +384,6 @@ namespace VitaShooter
 			
 			//create the quad tree
 			quadTree = new QuadTree(new Vector2 (Map.Instance.width/2.0f, Map.Instance.height/2.0f), new Vector2 (Map.Instance.width/2.0f, Map.Instance.height/2.0f));
-			
 			
 			//create enemies
 			var tex = new Texture2D ("/Application/data/tiles/enemy_sword2.png", false);
@@ -402,16 +402,14 @@ namespace VitaShooter
 			enemyList = new List<Enemy>();
 			list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
 			
+			//generate a given number of enemies
 			for(int i=0;i<BasicEnemy.noOfEnemiesToGenerate;i++)
 			{
 				Enemy e = new BasicEnemy(list[AppMain.random.Next(0,list.Count-1)].position, texture);
 				enemyList.Add(e);
 				enemySpriteList.AddChild(((BasicEnemy)e).sprite);
-				
 				EffectsLayer.AddChild(e);
-				
 				quadTree.insert(e);
-				
 			}
 			
 			
@@ -421,14 +419,12 @@ namespace VitaShooter
 			Interface.AddChild(ui);
 			
 			
-			//add enemy spawners
+			//add an enemy spawner every second
 			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, (dt) => {
+				
 				list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
-			
-					EnemySpawnPoint esp = new EnemySpawnPoint(list[AppMain.random.Next(0,list.Count-1)].position);
-
-
-					World.AddChild(esp);
+				EnemySpawnPoint esp = new EnemySpawnPoint(list[AppMain.random.Next(0,list.Count-1)].position);
+				World.AddChild(esp);
 
 
 			;}, 1.0f,false, -1);

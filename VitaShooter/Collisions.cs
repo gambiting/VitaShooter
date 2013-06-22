@@ -12,6 +12,10 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
+	/*
+	 * Class containing all functions used for detecting collisions
+	 * 
+	 * */
 	public class Collisions
 	{
 		public Collisions ()
@@ -19,11 +23,14 @@ namespace VitaShooter
 		}
 		
 		
-		
+		/*
+		 * Checks collisions with walls - for a given GameEntity ge, given map and a proposed Vector2 change to ge's position
+		 * */
 		public static bool checkWallsCollisions(GameEntity ge, Map map, ref Vector2 proposedChange)
 		{
 			
 			//alternative,experimental method
+			//tested,works well
 			int position = ((int)System.Math.Floor(ge.Position.Y+proposedChange.Y)*map.width)+(int)System.Math.Floor(ge.Position.X+proposedChange.X);
 			
 			if(map.tiles[position].type == MapTile.Types.wall)
@@ -34,7 +41,9 @@ namespace VitaShooter
 			return false;
 		}
 		
-		
+		/*
+		 * Checks collisions with walls - simpler method without proposed change, just checks if a given location collides with a wall
+		 * */
 		public static bool checkWallsCollisionsSimple(Vector2 location, Map map)
 		{
 			int position = ((int)System.Math.Floor(location.Y)*map.width)+(int)System.Math.Floor(location.X);
@@ -47,6 +56,11 @@ namespace VitaShooter
 			return false;
 		}
 		
+		
+		/*
+		 *  checks collisions with AmmoPacks
+		 * shit method, fix to use a QuadTree instead, otherwise creates a performance hit
+		 * */
 		public static bool checkAmmoPackCollisions(GameEntity ge, List<AmmoItem> list, out AmmoItem ai)
 		{
 			//temp bounds
@@ -71,6 +85,10 @@ namespace VitaShooter
 			return false;
 		}
 		
+		
+		/*
+		 * checks collisions between a given GameEntity ge and whatever is within the QuadTree
+		 * */ 
 		public static bool efficientCollisionsCheck(GameEntity ge, Vector2 proposedChange, out GameEntity oge)
 		{
 			
@@ -87,6 +105,10 @@ namespace VitaShooter
 			else return true;
 		}
 		
+		/*
+		 * Checks collisions of enemies together
+		 * DEPRACATED - use efficientCollisionsCheck instead
+		 * */
 		public static bool checkEnemiesCollisions(GameEntity ge, List<Enemy> list, Vector2 proposedChange, out Enemy oe)
 		{
 			//temp bounds
@@ -111,6 +133,9 @@ namespace VitaShooter
 			return false;
 		}
 		
+		/*
+		 * Finds the nearest enemy using QuadTree
+		 * */
 		public static bool findNearestEnemy(GameEntity ge, float range, out GameEntity oge)
 		{
 			
@@ -146,7 +171,9 @@ namespace VitaShooter
 			return true;
 		}
 		
-		
+		/*
+		 * Simple collision check between two entities
+		 * */
 		public static bool checkCollisionBetweenEntities(GameEntity ge1, GameEntity ge2)
 		{
 			Bounds2 tempBounds1 = new Bounds2(ge1.Position + ge1.bounds.Min, ge1.Position + ge1.bounds.Max);

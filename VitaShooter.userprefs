@@ -1,21 +1,21 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\Game.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\Bullet.cs">
     <Files>
-      <File FileName="VitaShooter\AppMain.cs" Line="160" Column="4" />
+      <File FileName="VitaShooter\AppMain.cs" Line="28" Column="69" />
       <File FileName="VitaShooter\Player.cs" Line="123" Column="30" />
       <File FileName="VitaShooter\GameEntity.cs" Line="21" Column="4" />
       <File FileName="VitaShooter\MapTile.cs" Line="31" Column="4" />
       <File FileName="VitaShooter\Map.cs" Line="156" Column="4" />
       <File FileName="VitaShooter\Collisions.cs" Line="41" Column="4" />
-      <File FileName="VitaShooter\Bullet.cs" Line="33" Column="45" />
+      <File FileName="VitaShooter\Bullet.cs" Line="125" Column="44" />
       <File FileName="VitaShooter\AmmoItem.cs" Line="45" Column="4" />
       <File FileName="VitaShooter\Game.cs" Line="322" Column="5" />
       <File FileName="VitaShooter\Enemy.cs" Line="37" Column="4" />
-      <File FileName="VitaShooter\BasicEnemy.cs" Line="1" Column="1" />
+      <File FileName="VitaShooter\BasicEnemy.cs" Line="191" Column="57" />
       <File FileName="VitaShooter\QuadTree.cs" Line="225" Column="4" />
       <File FileName="VitaShooter\pointMarker.cs" Line="39" Column="5" />
-      <File FileName="VitaShooter\ammoMarker.cs" Line="32" Column="4" />
+      <File FileName="VitaShooter\ammoMarker.cs" Line="18" Column="6" />
       <File FileName="VitaShooter\UI.cs" Line="55" Column="32" />
       <File FileName="VitaShooter\EnemySpawnPoint.cs" Line="40" Column="33" />
     </Files>
