@@ -11,6 +11,9 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
+	/*
+	 * Class representing the player
+	 * */
 	public class Player : GameEntity
 	{
 		public SpriteTile playerBodySprite;

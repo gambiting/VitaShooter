@@ -54,6 +54,10 @@
     <Compile Include="ammoMarker.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="EnemySpawnPoint.cs" />
+    <Compile Include="MainMenu.cs" />
+    <Compile Include="Support.cs" />
+    <Compile Include="SceneManager.cs" />
+    <Compile Include="BasicScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -108,11 +112,13 @@
     <Content Include="data\tut4.png" />
     <Content Include="data\tut5.png" />
     <Content Include="data\gameover.png" />
+    <Content Include="data\configuration\GameConfig.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
     <Folder Include="data\tiles\" />
     <Folder Include="data\sounds\" />
+    <Folder Include="data\configuration\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\tiles\basic.tmx" />

@@ -9,6 +9,10 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
+	/*
+	 * This class is used to represent a basic game entity, Game class extends this
+	 * 
+	 * */
 	public class GameEntity :  Sce.PlayStation.HighLevel.GameEngine2D.Node
 	{
 		

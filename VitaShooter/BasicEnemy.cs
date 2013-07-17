@@ -41,7 +41,7 @@ namespace VitaShooter
 			sprite.Scale = new Vector2(2.0f,2.0f);
 			
 			//set up the random vector
-			randomMovement = AppMain.rand.NextVector2(-0.01f,0.01f);
+			randomMovement = Support.rand.NextVector2(-0.01f,0.01f);
 			
 			//update the animation frames
 			sprite.Schedule((dt) => {

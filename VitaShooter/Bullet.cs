@@ -79,7 +79,6 @@ namespace VitaShooter
 			
 			
 			
-			
 		}
 		
 		public override void Tick (float dt)
@@ -113,6 +112,8 @@ namespace VitaShooter
 				//remove this bullet
 				this.Parent.RemoveChild(this, true);
 				
+				Game.Instance.bulletList.Remove(this);
+				
 				//die
 				this.Die();
 			}else if(Collisions.checkEnemiesCollisions(this, Game.Instance.enemyList, step,  out tempEnemy))
@@ -124,7 +125,7 @@ namespace VitaShooter
 				//particles!
 				
 				//create and start the particle emmiter
-				Particles fire_node= new Particles( 10 );
+				/*Particles fire_node= new Particles( 10 );
 				ParticleSystem fire = fire_node.ParticleSystem;
 				
 				fire.TextureInfo = new TextureInfo( fireTexture );
@@ -158,8 +159,10 @@ namespace VitaShooter
 				
 				//remove the particle emmiter after 0.5 seconds
 				fire_node.ScheduleInterval((at) => Director.Instance.CurrentScene.RemoveChild(fire_node,true),0.5f,1);
-				
+				*/
 				this.Parent.RemoveChild(this,true);
+				
+				Game.Instance.bulletList.Remove(this);
 				
 				this.Die();
 			}else

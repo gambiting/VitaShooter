@@ -75,19 +75,19 @@ namespace VitaShooter
 		public new void Draw()
 		{
 			
-			bottomBar.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(-1.0f,-1.2f);
-			ammoIcon.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(-0.1f,0.0f);
-			heartIcon.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(6.3f,0.0f);
-			coinIcon.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(11.5f,0.0f);
+			bottomBar.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(-1.0f,-1.2f);
+			ammoIcon.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(-0.1f,0.0f);
+			heartIcon.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(6.3f,0.0f);
+			coinIcon.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(11.5f,0.0f);
 			
 			ammoLabel.Text = "Ammo: " + Player.Instance.ammo + "/" + Player.Instance.maxAmmo;
-			ammoLabel.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(0.5f,0.0f);  //new Vector2(-2.0f,4.0f);
+			ammoLabel.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(0.5f,0.0f);  //new Vector2(-2.0f,4.0f);
 			
 			healthLabel.Text = "Health: " + Player.Instance.Health;
-			healthLabel.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(7.0f,0.0f); //+ new Vector2(2.0f,-2.0f);  //new Vector2(-2.0f,4.0f);
+			healthLabel.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(7.0f,0.0f); //+ new Vector2(2.0f,-2.0f);  //new Vector2(-2.0f,4.0f);
 			
 			scoreLabel.Text = "Score: " + Game.Instance.score ;
-			scoreLabel.Position = Game.Instance.camera.Center + cameraOffset + new Vector2(12f,0.0f);
+			scoreLabel.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(12f,0.0f);
 			
 			
 			

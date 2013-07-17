@@ -82,7 +82,7 @@ namespace VitaShooter
 		
 		public void drop()
 		{
-			if(AppMain.random.Next(0,10)<2)
+			if(Support.random.Next(0,10)<2)
 			{
 
 				AmmoItem a = new AmmoItem(this.Position);

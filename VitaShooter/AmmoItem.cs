@@ -39,7 +39,7 @@ namespace VitaShooter
 			sprite.Pivot = new Vector2(0.5f,0.5f);
 			
 			//rotate by a random angle
-			sprite.Rotation = sprite.Rotation.Rotate(AppMain.random.Next(-180,180));
+			sprite.Rotation = sprite.Rotation.Rotate(Support.random.Next(-180,180));
 			
 			//schedule this sprite to rotate every frame by a fraction of an angle
 			sprite.Schedule((dt) => {

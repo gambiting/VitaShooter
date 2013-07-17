@@ -12,6 +12,10 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
+	/*
+	 * Class used to parse and represent a map loaded from a file
+	 * 
+	 * */
 	public class Map
 	{
 		public static Map Instance;
@@ -53,6 +57,7 @@ namespace VitaShooter
 			
 		}
 		
+		
 		/*
 		 * Sets up the location of tiles in the map file so they can be easily searched
 		 * */
@@ -83,12 +88,12 @@ namespace VitaShooter
 			tileLocations.Add (MapTile.Types.empty,new Vector2i(0,0));
 		}
 		
+		/*
+		 * parses descriptions adding walls since they are normally not in the map
+		 * */
 		public void prepareDescriptions(Map m, List<MapTile> tiles)
 		{
 
-			
-			
-			
 			/*
 			 * FIRST PASS
 			 * 
@@ -140,6 +145,10 @@ namespace VitaShooter
 			
 		}
 		
+		
+		/*
+		 * Returnes a list with tiles of specified type
+		 * */
 		public List<MapTile> returnTilesOfType(MapTile.Types t)
 		{
 			List<MapTile> list = new List<MapTile>();
@@ -178,24 +187,21 @@ namespace VitaShooter
 			tex.SetFilter(TextureFilterMode.Disabled);
 			tex.SetWrap(TextureWrapMode.ClampToEdge);
 			
+			//texture map used for tiles is specified here(its dimensions)
 			var texture = new TextureInfo ( tex,  new Vector2i (1, 13));
 			
 			
+			//debug
+			//System.Console.WriteLine(texture.TileSizeInPixelsf.ToString());
 			
-			System.Console.WriteLine(texture.TileSizeInPixelsf.ToString());
-			
-			//spritelist for the map
+			//spritelist for the entire map
 			SpriteList spriteList = new SpriteList( texture)
 			{ 
 				BlendMode = BlendMode.Normal
 			};
 			spriteList.EnableLocalTransform = true;
 			
-			
-			
 			Vector2i numCells = new Vector2i (m.width,m.height);
-			
-			
 			
 			for (int y=0; y<numCells.Y-1; y++) 
 			{
@@ -208,14 +214,11 @@ namespace VitaShooter
 					//changing uv coordinates "should" move the sprite,but it does not
 					//changing sprite.position achieves this goal instead
 					//Vector2 uv = new Vector2 ((float)x, (float)y) / numCells.Vector2 ();
-			
-
 					var sprite = returnSpriteFromTile(tiles[position].type,texture);
 					
 					//sprite.CenterSprite(new Vector2(0.5f,0.5f));
 					
-					//sprite.Scale = new Vector2(2.0f,2.0f);
-					//sprite.Quad.S = new Vector2(2f,2);
+					
 					Vector2 p = new Vector2(x,y) ;//- (new Vector2(m.width,m.height))/2.0f ;
 					
 					System.Console.WriteLine(p.ToString());
@@ -226,8 +229,7 @@ namespace VitaShooter
 					//set that position to the sprite
 					sprite.Position = p;
 					
-					
-					
+					//add a random disco effect to the floor tiles
 					if(tiles[position].type == MapTile.Types.floor)
 					{
 						sprite.Schedule( (dt) => { 
@@ -235,7 +237,7 @@ namespace VitaShooter
 							//change the floor texture to a random one from the same pack
 							if(Common.FrameCount%10==0)
 							{
-								var a = AppMain.random.Next(4,12);
+								var a = Support.random.Next(4,12);
 								
 								sprite.TileIndex2D = new Vector2i(0,a);
 								
@@ -246,6 +248,7 @@ namespace VitaShooter
 					}
 					
 					tiles[position].sprite = sprite;
+					
 					//get the local bounds
 					sprite.GetlContentLocalBounds(ref tiles[position].bounds);
 					spriteList.AddChild(tiles[position].sprite);

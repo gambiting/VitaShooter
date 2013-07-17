@@ -13,6 +13,9 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
+	/*
+	 * Class used to represent individual map tiles
+	 * */
 	public class MapTile
 	{
 		public enum Types {wall=1,floor=2,empty=3};
