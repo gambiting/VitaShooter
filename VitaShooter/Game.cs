@@ -18,10 +18,7 @@ namespace VitaShooter
 		
 		
 		
-		//sprite for gameover screen
-		SpriteUV gameoverSprite;
 		
-		Label gameoverLabel = new Label();
 
 		//enemy sprite list
 		public SpriteList enemySpriteList;
@@ -48,52 +45,14 @@ namespace VitaShooter
 		
 		public Game ()
 		{
-			this.initGame();
+			
 
 			
 			MusicSystem.Instance.Play("DST-Darkseid.mp3");
 		}
 		
-		public void initGameOver()
-		{
-			this.Camera2D.SetViewFromViewport();
-			gameoverSprite = new SpriteUV(new TextureInfo("/Application/data/gameover.png"));
-			gameoverSprite.Scale = gameoverSprite.TextureInfo.TextureSizef;
-			gameoverSprite.Position = new Vector2(300f,544.0f/2.0f- gameoverSprite.TextureInfo.TextureSizef.Y+ 80f);
-			
-			gameoverLabel.Text = "Your final score was: " + Game.Instance.score + "\nPress X to try again\nO to return to menu";
-			gameoverLabel.Position = new Vector2(330f, 200.0f);
-			
-			Font f = new Font("/Application/data/data-latin.ttf",25, FontStyle.Bold);
-			FontMap fm = new FontMap(f);
-			gameoverLabel.FontMap = fm;
-			
-			Foreground.AddChild(gameoverSprite);
-			Foreground.AddChild(gameoverLabel);
-			
-			score = 0;
-		}
 		
-		public void gameoverTick(float dt)
-		{
-			if(Input2.GamePad0.Cross.Press)
-			{
-				Foreground.RemoveAllChildren(true);
-				
-				initGame();
-				//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, gameoverTick);
-				//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameTick, 0.0f, false);
-			}
-			if(Input2.GamePad0.Circle.Press)
-			{
-				Foreground.RemoveAllChildren(true);
-				
-				//initTitle();
-				//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, gameoverTick);
-				//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, titleTick, 0.0f, false);
-			}
-		}
-		
+
 		
 		
 		
@@ -186,6 +145,7 @@ namespace VitaShooter
 
 			;}, 1.0f,false, -1);
 			
+			
 		}
 		
 		public override void Tick (float dt)
@@ -262,7 +222,7 @@ namespace VitaShooter
 				
 				
 				
-				initGameOver();
+				SceneManager.Instance.changeSceneTo(GameOverScene.Instance);
 				//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, gameTick);
 				//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, gameoverTick, 0.0f, false);
 				
@@ -277,6 +237,27 @@ namespace VitaShooter
 			//camera.Center.
 			
 			//camera.Center.MoveTo(player.Position,1f);
+			
+		}
+		
+		public override void OnEnter ()
+		{
+			base.OnEnter ();
+			score = 0;
+			
+			this.initGame();
+		}
+		
+		public override void OnExit ()
+		{
+			base.OnExit ();
+			
+			this.Background.RemoveAllChildren(true);
+			this.Foreground.RemoveAllChildren(true);
+			this.EffectsLayer.RemoveAllChildren(true);
+			this.World.RemoveAllChildren(true);
+			this.Interface.RemoveAllChildren(true);
+			
 			
 		}
 	}

@@ -54,8 +54,14 @@ namespace VitaShooter
 			//make a new Game object
 			Game.Instance = new Game ();
 			
+			//make a new game over object
+			GameOverScene.Instance = new GameOverScene();
+			
 			//make a new MainMenu object
 			MainMenu.Instance = new MainMenu();
+			
+			//make a new LevelSelectScene object
+			LevelSelectScene.Instance = new LevelSelectScene();
 			
 			//make a tutorial object
 			TutorialScene.Instance = new TutorialScene();

@@ -27,7 +27,7 @@ namespace VitaShooter
 			
 			if(predefinedMaps.Count>0)
 			{
-				currentMap = predefinedMaps[1];
+				currentMap = predefinedMaps[0];
 			}else{
 				System.Console.WriteLine("Error - no maps loaded!");
 			}

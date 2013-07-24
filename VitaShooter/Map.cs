@@ -127,6 +127,7 @@ namespace VitaShooter
 			//make the thumbnail larger
 			//thumbnailSprite.Position = new Vector2(100.0f,100.0f);
 			thumbnailSprite.FlipV = true;
+			thumbnailSprite.CenterSprite(new Vector2(0.5f,0.5f));
 			thumbnailSprite.Scale = new Vector2(400.0f,400.0f);
 			
 		}

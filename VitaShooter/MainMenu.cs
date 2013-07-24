@@ -89,7 +89,6 @@ namespace VitaShooter
 			
 			Background.AddChild(menuBackground);
 			
-			Foreground.AddChild(MapManager.Instance.currentMap.thumbnailSprite);
 		}
 		
 		
@@ -103,7 +102,7 @@ namespace VitaShooter
 				if(menuSelection==0)
 				{
 					
-					SceneManager.Instance.changeSceneTo(Game.Instance);
+					SceneManager.Instance.changeSceneTo(LevelSelectScene.Instance);
 				}else if(menuSelection==1)
 				{
 					SceneManager.Instance.changeSceneTo(TutorialScene.Instance);
@@ -164,6 +163,21 @@ namespace VitaShooter
 			}
 			
 			
+		}
+		
+		public override void OnEnter ()
+		{
+			base.OnEnter ();
+			this.initTitle();
+			menuSelection = 0;
+		}
+		
+		public override void OnExit ()
+		{
+			base.OnExit ();
+			
+			this.Background.RemoveAllChildren(true);
+			this.Foreground.RemoveAllChildren(true);
 		}
 	}
 }
