@@ -88,25 +88,25 @@ namespace VitaShooter
 			}
 			
 			Background.AddChild(menuBackground);
+			
+			Foreground.AddChild(MapManager.Instance.currentMap.thumbnailSprite);
 		}
 		
 		
 		public override void Tick (float dt)
 		{
+			base.Tick(dt);
+			
+			
 			if(Input2.GamePad0.Cross.Press)
 			{
 				if(menuSelection==0)
 				{
-					//Foreground.RemoveAllChildren(true);
-					//Background.RemoveAllChildren(true);
-					//initGame();
 					
 					SceneManager.Instance.changeSceneTo(Game.Instance);
 				}else if(menuSelection==1)
 				{
-					//Foreground.RemoveAllChildren(true);
-					//Background.RemoveAllChildren(true);
-					//initTutorial();
+					SceneManager.Instance.changeSceneTo(TutorialScene.Instance);
 					
 				}else if(menuSelection==2)
 				{

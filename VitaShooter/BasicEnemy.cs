@@ -106,7 +106,7 @@ namespace VitaShooter
 					GameEntity tempEntity;
 					
 					//check wall collisions and then collisions with other enemies
-					if(!Collisions.checkWallsCollisions(this, Map.Instance, ref proposedChange) && !Collisions.efficientCollisionsCheck(this,proposedChange,out tempEntity))
+					if(!Collisions.checkWallsCollisions(this, MapManager.Instance.currentMap, ref proposedChange) && !Collisions.efficientCollisionsCheck(this,proposedChange,out tempEntity))
 					{
 						//no collision, so we can change the position
 						Position+=proposedChange/speedModifier;
@@ -120,7 +120,7 @@ namespace VitaShooter
 					//collision detection on the Y axis
 					
 					proposedChange = new Vector2(0.0f,step.Y)*speedModifier;
-					if(!Collisions.checkWallsCollisions(this, Map.Instance, ref proposedChange) && !Collisions.efficientCollisionsCheck(this,proposedChange,out tempEntity))
+					if(!Collisions.checkWallsCollisions(this, MapManager.Instance.currentMap, ref proposedChange) && !Collisions.efficientCollisionsCheck(this,proposedChange,out tempEntity))
 					{
 						Position+=proposedChange/speedModifier;
 					}else if(isMovingRandomly)	
@@ -180,7 +180,7 @@ namespace VitaShooter
 			//do the collision check for each step
 			for(int i=0;i<10;i++)
 			{
-				if(Collisions.checkWallsCollisionsSimple(imaginaryBulletPosition, Map.Instance))
+				if(Collisions.checkWallsCollisionsSimple(imaginaryBulletPosition, MapManager.Instance.currentMap))
 				{
 					return false;
 				}

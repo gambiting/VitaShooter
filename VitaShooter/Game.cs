@@ -16,8 +16,7 @@ namespace VitaShooter
 		
 		public static Game Instance;
 		
-		//tutorial sprites
-		SpriteUV tut1;
+		
 		
 		//sprite for gameover screen
 		SpriteUV gameoverSprite;
@@ -43,7 +42,7 @@ namespace VitaShooter
 		
 		public int score=0;
 		
-		public int tutorialProgress=0;
+		
 		
 		public static bool autoAim = true;
 		
@@ -53,50 +52,6 @@ namespace VitaShooter
 
 			
 			MusicSystem.Instance.Play("DST-Darkseid.mp3");
-		}
-		
-		public void initTutorial()
-		{
-			this.Camera2D.SetViewFromViewport();
-			
-			tut1 = new SpriteUV(new TextureInfo("/Application/data/tut1.png"));
-			tut1.Scale = tut1.TextureInfo.TextureSizef;
-			Foreground.AddChild(tut1);
-		}
-		
-		public void tutorialTick(float dt)
-		{
-			
-			
-			
-			if(Input2.GamePad0.Cross.Press)
-			{
-				switch(tutorialProgress)
-				{
-				case 1:
-					tut1.TextureInfo = new TextureInfo("/Application/data/tut2.png");
-					break;
-				case 2:
-					tut1.TextureInfo = new TextureInfo("/Application/data/tut3.png");
-					break;
-				case 3:
-					tut1.TextureInfo = new TextureInfo("/Application/data/tut4.png");
-					break;
-				case 4:
-					tut1.TextureInfo = new TextureInfo("/Application/data/tut5.png");
-					break;
-				case 5:
-					Foreground.RemoveAllChildren(true);
-					tutorialProgress=-1;
-					//initTitle();
-					//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Unschedule(Scene, tutorialTick);
-					//Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(Scene, titleTick, 0.0f, false);
-					break;
-					
-				}
-				tutorialProgress++;	
-			}
-			
 		}
 		
 		public void initGameOver()
@@ -146,21 +101,13 @@ namespace VitaShooter
 		
 		public void initGame()
 		{
-			//empty the scene
-			this.RemoveAllChildren(true);
-			
-			//unschedule everything
-			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.UnscheduleAll();
-			
-			
 			//set view close to the scene
 			this.Camera2D.SetViewFromHeightAndCenter(10.0f, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
 			
-			//create a new map
-			Map.Instance =  new Map();
+			
 			
 			//add all sprites loaded from the map
-			foreach(SpriteList sl in Map.Instance.spriteList)
+			foreach(SpriteList sl in MapManager.Instance.currentMap.spriteList)
 			{
 				Background.AddChild(sl);
 			}
@@ -182,7 +129,7 @@ namespace VitaShooter
 			
 			//create ammo packs
 			ammoList = new List<AmmoItem>();
-			List<MapTile> list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
+			List<MapTile> list = MapManager.Instance.currentMap.returnTilesOfType(MapTile.Types.floor);
 			
 			//add a specified number of ammo packs
 			for(int i=0;i<AmmoItem.noOfAmmoToGenerate;i++)
@@ -193,7 +140,7 @@ namespace VitaShooter
 			}
 			
 			//create the quad tree
-			quadTree = new QuadTree(new Vector2 (Map.Instance.width/2.0f, Map.Instance.height/2.0f), new Vector2 (Map.Instance.width/2.0f, Map.Instance.height/2.0f));
+			quadTree = new QuadTree(new Vector2 (MapManager.Instance.currentMap.width/2.0f, MapManager.Instance.currentMap.height/2.0f), new Vector2 (MapManager.Instance.currentMap.width/2.0f, MapManager.Instance.currentMap.height/2.0f));
 			
 			//create enemies
 			var tex = new Texture2D ("/Application/data/tiles/enemy_sword2.png", false);
@@ -210,7 +157,7 @@ namespace VitaShooter
 			
 			
 			enemyList = new List<Enemy>();
-			list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
+			list = MapManager.Instance.currentMap.returnTilesOfType(MapTile.Types.floor);
 			
 			//generate a given number of enemies
 			for(int i=0;i<BasicEnemy.noOfEnemiesToGenerate;i++)
@@ -232,7 +179,7 @@ namespace VitaShooter
 			//add an enemy spawner every second
 			Sce.PlayStation.HighLevel.GameEngine2D.Scheduler.Instance.Schedule(this, (dt) => {
 				
-				list = Map.Instance.returnTilesOfType(MapTile.Types.floor);
+				list = MapManager.Instance.currentMap.returnTilesOfType(MapTile.Types.floor);
 				EnemySpawnPoint esp = new EnemySpawnPoint(list[Support.random.Next(0,list.Count-1)].position);
 				World.AddChild(esp);
 
@@ -243,7 +190,7 @@ namespace VitaShooter
 		
 		public override void Tick (float dt)
 		{
-			base.Tick(dt);
+			//base.Tick(dt);
 			if(Player.Instance == null)
 			{
 				

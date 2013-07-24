@@ -48,7 +48,7 @@ namespace VitaShooter
 			
 			this.AddChild (playerBodySprite);
 			
-			Position = new Vector2 (Map.Instance.width/2.0f, Map.Instance.height/2.0f);
+			Position = new Vector2 (MapManager.Instance.currentMap.width/2.0f, MapManager.Instance.currentMap.height/2.0f);
 			
 			//get the local bounds of the sprite
 			bounds = new Bounds2();
@@ -113,7 +113,7 @@ namespace VitaShooter
 			if(analogX!=0.0f)
 			{
 				proposedChange = new Vector2(analogX/10f,0.0f);
-				if(!Collisions.checkWallsCollisions(this,Map.Instance,ref proposedChange))
+				if(!Collisions.checkWallsCollisions(this,MapManager.Instance.currentMap,ref proposedChange))
 				{
 					Position+=proposedChange;
 				}
@@ -121,7 +121,7 @@ namespace VitaShooter
 			if(analogY!=0.0f)
 			{
 				proposedChange = new Vector2(0.0f,-analogY/10f);
-				if(!Collisions.checkWallsCollisions(this,Map.Instance,ref proposedChange))
+				if(!Collisions.checkWallsCollisions(this,MapManager.Instance.currentMap,ref proposedChange))
 				{
 					Position+=proposedChange;
 				}

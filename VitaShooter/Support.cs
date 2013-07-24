@@ -9,6 +9,8 @@ namespace VitaShooter
 	{
 		public static Dictionary<string,string> GameParameters = new Dictionary<string, string>();
 		
+		public static float screenWidth,screenHeight;
+		
 		//two different types of random generators, for different purposes
 		public static System.Random random = new System.Random ();
 		public static Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.RandGenerator rand = new Sce.PlayStation.HighLevel.GameEngine2D.Base.Math.RandGenerator ();

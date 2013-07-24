@@ -58,6 +58,9 @@
     <Compile Include="Support.cs" />
     <Compile Include="SceneManager.cs" />
     <Compile Include="BasicScene.cs" />
+    <Compile Include="TutorialScene.cs" />
+    <Compile Include="MapManager.cs" />
+    <Compile Include="ThumbnailScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -73,9 +76,6 @@
     <Content Include="data\tiles\tile_floor_wall.png" />
     <Content Include="data\tiles\tile_floor_wall_incorner.png" />
     <Content Include="data\tiles\tile_floor_wall_outcorner.png" />
-    <Content Include="data\dungeon1.txt">
-      <DeployService-Deploy>true</DeployService-Deploy>
-    </Content>
     <Content Include="data\tiles\dungeon_tiles.png" />
     <Content Include="data\tiles\simple.png" />
     <Content Include="data\tiles\simple2.png" />
@@ -113,12 +113,18 @@
     <Content Include="data\tut5.png" />
     <Content Include="data\gameover.png" />
     <Content Include="data\configuration\GameConfig.txt" />
+    <Content Include="data\maps\dungeon1.txt">
+      <DeployService-Deploy>true</DeployService-Deploy>
+    </Content>
+    <Content Include="data\maps\dungeon2.txt" />
+    <Content Include="data\maps\dungeon3.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
     <Folder Include="data\tiles\" />
     <Folder Include="data\sounds\" />
     <Folder Include="data\configuration\" />
+    <Folder Include="data\maps\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="data\tiles\basic.tmx" />

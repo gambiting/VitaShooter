@@ -29,7 +29,10 @@ namespace VitaShooter
 		
 		public Dictionary<MapTile.Types, Vector2i> tileLocations; 
 		
-		public Map ()
+		
+		public SpriteUV thumbnailSprite;
+		
+		public Map (string filePath)
 		{
 			
 			random = new Random();
@@ -42,7 +45,7 @@ namespace VitaShooter
 			wallTiles = new List<MapTile> ();
 			
 			
-			ParseFile (this, "/Application/data/dungeon1.txt", tiles);
+			ParseFile (this, filePath, tiles);
 			
 			tiles.Reverse();
 			
@@ -51,9 +54,80 @@ namespace VitaShooter
 			spriteList = prepareTiles (this, tiles);
 			
 			
-			
+			Console.WriteLine ("map: " + filePath);
 			Console.WriteLine ("width: " + width);
 			Console.WriteLine ("heigh: " + height);
+			
+			//prepare thumbnail
+			
+			//create new scene for the thumbnail
+			ThumbnailScene ts = new ThumbnailScene();
+			
+			//set up the camera so the entire level is visible
+			ts.Camera2D.SetViewFromWidthAndCenter(FMath.Max(width,height), new Vector2(width/2.0f,height/2.0f));
+			
+			
+			
+			//create a new framebuffer for the thumbnail
+			FrameBuffer thumbnailBuffer = new FrameBuffer ();
+			//create an associated texture
+			Texture2D tex2d = new Texture2D (256,256, false, PixelFormat.Rgba, PixelBufferOption.Renderable);
+			thumbnailBuffer.SetColorTarget (tex2d, 0);
+			
+			//sprite to contain the thumbnail
+			thumbnailSprite = new SpriteUV (new TextureInfo (tex2d));
+			
+			
+			//render the thumbnail:
+			if(Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene==null)
+			{
+				Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.RunWithScene(ts, true);
+			}else{
+				Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.ReplaceScene(ts);
+			}
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Update ();
+			
+			//save the current framebuffer and viewport
+			FrameBuffer oldBuffer = Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.GetFrameBuffer();
+			ImageRect oldViewport = Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.GetViewport();
+			Vector4 oldClearColour = Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.GetClearColor();
+			
+			//set the new framebuffer for the thumbnail
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetFrameBuffer (thumbnailBuffer);
+			//set the correct viewport
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetViewport (0, 0, 256,256);
+			
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetClearColor(new Vector4(0.0f,0.0f,0.0f,1.0f));
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.Clear();
+			
+			//add the spritelists to the scene
+			foreach(SpriteList sl in spriteList)
+			{
+				
+				ts.Background.AddChild(sl);
+			}
+			
+			//render the thumbnail scene
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene.render();
+			
+			//switch back to old framebuffer and viewport:
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetFrameBuffer (oldBuffer);
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetViewport(oldViewport);
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetClearColor(oldClearColour);
+			
+			
+			//get rid of the scene
+			//remove all children,but WITHOUT THE CLEANUP(otherwise they won't work in the main Game scene)
+			ts.Background.RemoveAllChildren(false);
+			ts = null;
+			
+			//Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SwapBuffers ();
+			//Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.PostSwap ();
+			
+			//make the thumbnail larger
+			//thumbnailSprite.Position = new Vector2(100.0f,100.0f);
+			thumbnailSprite.FlipV = true;
+			thumbnailSprite.Scale = new Vector2(400.0f,400.0f);
 			
 		}
 		
@@ -129,10 +203,10 @@ namespace VitaShooter
 			
 			for(int x=0;x<m.height-1;x++)
 			{
-				tiles[x*m.height].type= MapTile.Types.wall;
-				tiles[x*m.height+m.width-1].type = MapTile.Types.wall;
+				tiles[x*m.width].type= MapTile.Types.wall;
+				tiles[x*m.width+m.width-1].type = MapTile.Types.wall;
 			}
-			
+		
 			
 			foreach(MapTile mt in tiles)
 			{
@@ -216,12 +290,10 @@ namespace VitaShooter
 					//Vector2 uv = new Vector2 ((float)x, (float)y) / numCells.Vector2 ();
 					var sprite = returnSpriteFromTile(tiles[position].type,texture);
 					
-					//sprite.CenterSprite(new Vector2(0.5f,0.5f));
-					
-					
 					Vector2 p = new Vector2(x,y) ;//- (new Vector2(m.width,m.height))/2.0f ;
 					
-					System.Console.WriteLine(p.ToString());
+					//DEBUG
+					//System.Console.WriteLine(p.ToString());
 					
 					//save the tile position in its object
 					tiles[position].position = p;

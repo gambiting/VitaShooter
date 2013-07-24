@@ -87,7 +87,7 @@ namespace VitaShooter
 			
 			
 			//check the collision with the walls
-			if(Collisions.checkWallsCollisions(this, Map.Instance,ref step))
+			if(Collisions.checkWallsCollisions(this, MapManager.Instance.currentMap,ref step))
 			{
 				
 				//play a sound
