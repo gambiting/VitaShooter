@@ -35,6 +35,16 @@ namespace VitaShooter
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.ReplaceScene(scene);
 		}
 		
+		public void pushScene(Scene scene)
+		{
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.PushScene(scene);
+		}
+		
+		public void popScene()
+		{
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.PopScene();
+		}
+		
 		public void Initialize()
 		{
 			//initialize the director and set the clear colour to black
@@ -59,6 +69,9 @@ namespace VitaShooter
 			
 			//make a new MainMenu object
 			MainMenu.Instance = new MainMenu();
+			
+			//make a new PauseScene object
+			PauseScene.Instance = new PauseScene();
 			
 			//make a new LevelSelectScene object
 			LevelSelectScene.Instance = new LevelSelectScene();

@@ -303,7 +303,7 @@ namespace VitaShooter
 					sprite.Position = p;
 					
 					//add a random disco effect to the floor tiles
-					if(tiles[position].type == MapTile.Types.floor)
+					/*if(tiles[position].type == MapTile.Types.floor)
 					{
 						sprite.Schedule( (dt) => { 
 
@@ -318,7 +318,7 @@ namespace VitaShooter
 							
 						
 						} );
-					}
+					}*/
 					
 					tiles[position].sprite = sprite;
 					

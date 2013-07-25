@@ -63,6 +63,7 @@
     <Compile Include="ThumbnailScene.cs" />
     <Compile Include="LevelSelectScene.cs" />
     <Compile Include="GameOverScene.cs" />
+    <Compile Include="PauseScene.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -120,6 +121,16 @@
     </Content>
     <Content Include="data\maps\dungeon2.txt" />
     <Content Include="data\maps\dungeon3.txt" />
+    <Content Include="data\maps\dungeon4.txt" />
+    <Content Include="data\maps\dungeon5.txt" />
+    <Content Include="data\maps\dungeon6.txt" />
+    <Content Include="data\maps\dungeon7.txt" />
+    <Content Include="data\maps\dungeon8.txt" />
+    <Content Include="data\maps\dungeon10.txt" />
+    <Content Include="data\maps\dungeon9.txt" />
+    <Content Include="data\maps\dungeon11.txt" />
+    <Content Include="data\button_returntomenu.png" />
+    <Content Include="data\button_returntogame.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />

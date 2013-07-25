@@ -48,7 +48,10 @@ namespace VitaShooter
 			
 			this.AddChild (playerBodySprite);
 			
-			Position = new Vector2 (MapManager.Instance.currentMap.width/2.0f, MapManager.Instance.currentMap.height/2.0f);
+			//Position = new Vector2 (MapManager.Instance.currentMap.width/2.0f, MapManager.Instance.currentMap.height/2.0f);
+			
+			var list = MapManager.Instance.currentMap.returnTilesOfType(MapTile.Types.floor);
+			Position = list[Support.random.Next(0,list.Count-1)].position;
 			
 			//get the local bounds of the sprite
 			bounds = new Bounds2();

@@ -39,6 +39,8 @@ namespace VitaShooter
 		
 		public int score=0;
 		
+		public bool paused=false;
+		
 		
 		
 		public static bool autoAim = true;
@@ -194,6 +196,14 @@ namespace VitaShooter
 			}
 			
 			
+			//check start button(for pause menu)
+			if(Input2.GamePad0.Start.Press)
+			{
+				this.paused = true;
+				SceneManager.Instance.pushScene(PauseScene.Instance);
+			}
+			
+			
 			
 			//check if the player has collected any ammo packs
 			AmmoItem ammoItemToRemove;
@@ -245,21 +255,30 @@ namespace VitaShooter
 			base.OnEnter ();
 			score = 0;
 			
-			this.initGame();
+			if(!paused)
+			{
+				this.initGame();
+			}else{
+				paused = false;
+			}
 		}
 		
 		public override void OnExit ()
 		{
 			base.OnExit ();
 			
-			this.Background.RemoveAllChildren(true);
-			this.Foreground.RemoveAllChildren(true);
-			this.EffectsLayer.RemoveAllChildren(true);
-			this.World.RemoveAllChildren(true);
-			this.Interface.RemoveAllChildren(true);
+			if(!paused)
+			{
+				this.Background.RemoveAllChildren(true);
+				this.Foreground.RemoveAllChildren(true);
+				this.EffectsLayer.RemoveAllChildren(true);
+				this.World.RemoveAllChildren(true);
+				this.Interface.RemoveAllChildren(true);
+			}
 			
 			
 		}
+		
 	}
 }
 
