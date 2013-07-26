@@ -76,6 +76,15 @@ namespace VitaShooter
 				}
 			}
 			
+			if(Input2.Touch00.Down && sprite_button_returntogame.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+			{
+				menuSelection=0;
+			}else if(Input2.Touch00.Down && sprite_button_returntomenu.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+			{
+				menuSelection=1;
+			}
+			
+			
 			switch(menuSelection)
 			{
 			case 0:
@@ -91,7 +100,19 @@ namespace VitaShooter
 				sprite_button_returntomenu.Color = new Vector4(1.0f,1.0f,0.0f,1.0f);
 				break;
 			}
+			
+			if(Input2.Touch00.Release && sprite_button_returntogame.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+			{
+				SceneManager.Instance.popScene();
+			}else if(Input2.Touch00.Release && sprite_button_returntomenu.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+			{
+				Game.Instance.paused=false;
+				Game.Instance.OnExit();
+				SceneManager.Instance.changeSceneTo(MainMenu.Instance);
+			}
+			
 		}
+	
 		
 		public override void OnEnter ()
 		{

@@ -41,7 +41,9 @@ namespace VitaShooter
 		
 		public bool paused=false;
 		
+		public float cameraHeight = 10.0f;
 		
+		public float multitouchDistance = 0.0f;
 		
 		public static bool autoAim = true;
 		
@@ -62,8 +64,10 @@ namespace VitaShooter
 		
 		public void initGame()
 		{
+			cameraHeight = 10.0f;
+			
 			//set view close to the scene
-			this.Camera2D.SetViewFromHeightAndCenter(10.0f, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
+			this.Camera2D.SetViewFromHeightAndCenter(cameraHeight, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
 			
 			
 			
@@ -203,6 +207,36 @@ namespace VitaShooter
 				SceneManager.Instance.pushScene(PauseScene.Instance);
 			}
 			
+			// pinch-to-zoom
+			//only check for multitouch points if device supports more than one touch point
+			if(Input2.Touch.MaxTouch>1)
+			{
+				//only proceed if the user is actually touching both points
+				if(Input2.Touch.GetData(0)[0].Down && Input2.Touch.GetData(0)[1].Down)
+				{
+					
+					
+				
+					//first touch point
+					Vector2 touch1 = Director.Instance.CurrentScene.GetTouchPos(0);
+					
+					//second touch point
+					Vector2 touch2 = Director.Instance.CurrentScene.GetTouchPos(1);
+					
+					//reset the distance measure if the screen has just been touched
+					if(Input2.Touch.GetData(0)[0].Press || Input2.Touch.GetData(0)[1].Press)
+					{
+						multitouchDistance = touch1.Distance(touch2);
+					}else
+					{
+						var newDistance = touch1.Distance(touch2);
+						
+						cameraHeight+=(multitouchDistance-newDistance);
+						this.Camera2D.SetViewFromHeightAndCenter(cameraHeight, Player.Instance.Position);
+					}
+				}
+				
+			}
 			
 			
 			//check if the player has collected any ammo packs
