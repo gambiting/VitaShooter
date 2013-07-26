@@ -22,6 +22,7 @@ namespace VitaShooter
 		public static float thumbnailSpacing = 50.0f;
 		public static float transitionDuration = 0.5f;
 		public Vector2 originalTouch;
+		public List<Support.CustomLabel> labels;
 		
 		public LevelSelectScene ()
 		{
@@ -32,6 +33,9 @@ namespace VitaShooter
 			this.levelSelection = 0;
 			
 			this.Camera2D.SetViewFromViewport ();
+			
+			//labels
+			labels = new List<Support.CustomLabel> ();
 			
 			
 			//mini background discofloor
@@ -59,12 +63,20 @@ namespace VitaShooter
 			
 			for (int i=0; i<MapManager.Instance.predefinedMaps.Count; i++) {
 				
+				//add thumbnail
 				float newX = 960.0f / 2.0f + i * (thumbnailSize + thumbnailSpacing);
 				float scaleFactor = FMath.Clamp (thumbnailSize - FMath.Abs ((960.0f / 2.0f) - newX) / 4.0f, 0.0f, thumbnailSize);
 				MapManager.Instance.predefinedMaps [i].thumbnailSprite.Scale = new Vector2 (scaleFactor, scaleFactor);
 				MapManager.Instance.predefinedMaps [i].thumbnailSprite.Position = new Vector2 (newX, 544.0f / 2.0f);
 				
 				Foreground.AddChild (MapManager.Instance.predefinedMaps [i].thumbnailSprite);
+				
+				//add label:
+				var tempLabel = new Support.CustomLabel (new Vector2 (newX, 544.0f / 2.0f - thumbnailSize * 0.6f), "Level " + (i + 1) + "\nHighscore: 0", SceneManager.UIFontMap);
+				labels.Add (tempLabel);
+				
+				Foreground.AddChild (tempLabel);
+				
 			}
 		}
 		
@@ -108,7 +120,7 @@ namespace VitaShooter
 				
 				for (int i=0; i<MapManager.Instance.predefinedMaps.Count; i++) {
 						
-					float newX = 960.0f / 2.0f + i * (thumbnailSize + thumbnailSpacing) - levelSelection * (thumbnailSize + thumbnailSpacing) - (originalTouch.X-GetTouchPos().X)*2.0f;
+					float newX = 960.0f / 2.0f + i * (thumbnailSize + thumbnailSpacing) - levelSelection * (thumbnailSize + thumbnailSpacing) - (originalTouch.X - GetTouchPos ().X) * 2.0f;
 						
 					MapManager.Instance.predefinedMaps [i].thumbnailSprite.RunAction (
 						new MoveTo (
@@ -121,18 +133,28 @@ namespace VitaShooter
 						
 					MapManager.Instance.predefinedMaps [i].thumbnailSprite.RunAction (
 							new ScaleTo (new Vector2 (scaleFactor, scaleFactor), 0.5f));
+					
+					
+					//adjust labels
+				
+					float labelScaleFactor = FMath.Clamp (1.0f - FMath.Abs ((960.0f / 2.0f) - newX) / 1000.0f, 0.0f, 1.0f);
+					labels [i].RunAction (
+						new MoveTo (
+						new Vector2 (
+						newX,
+						MapManager.Instance.predefinedMaps [i].thumbnailSprite.Position.Y - thumbnailSize * 0.65f * labelScaleFactor), transitionDuration));
+					labels [i].RunAction (new ScaleTo (new Vector2 (labelScaleFactor, labelScaleFactor), 0.5f));
 				}
 				
 				
 			}
 			
 			
-			if(Input2.Touch00.Release)
-			{
-				levelSelection+= (int)((originalTouch.X-GetTouchPos().X)*2.0f/(thumbnailSize*0.75f));
+			if (Input2.Touch00.Release) {
+				levelSelection += (int)((originalTouch.X - GetTouchPos ().X) * 2.0f / (thumbnailSize * 0.75f));
 				
-				levelSelection = (int)FMath.Clamp(levelSelection,0,MapManager.Instance.predefinedMaps.Count-1);
-				adjustPositions();
+				levelSelection = (int)FMath.Clamp (levelSelection, 0, MapManager.Instance.predefinedMaps.Count - 1);
+				adjustPositions ();
 			}
 			
 			
@@ -155,6 +177,20 @@ namespace VitaShooter
 						
 				MapManager.Instance.predefinedMaps [i].thumbnailSprite.RunAction (
 							new ScaleTo (new Vector2 (scaleFactor, scaleFactor), 0.5f));
+				
+				
+				//adjust labels
+				
+				float labelScaleFactor = FMath.Clamp (1.0f - FMath.Abs ((960.0f / 2.0f) - newX) / 1000.0f, 0.0f, 1.0f);
+				labels [i].RunAction (
+						new MoveTo (
+						new Vector2 (
+						newX,
+						MapManager.Instance.predefinedMaps [i].thumbnailSprite.Position.Y - thumbnailSize * 0.65f * labelScaleFactor), transitionDuration));
+				labels [i].RunAction (new ScaleTo (new Vector2 (labelScaleFactor, labelScaleFactor), 0.5f));
+				
+				
+				
 			}
 		}
 		

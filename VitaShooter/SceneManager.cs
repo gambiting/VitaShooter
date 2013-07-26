@@ -18,8 +18,8 @@ namespace VitaShooter
 	public class SceneManager
 	{
 		public static SceneManager Instance;
-		static FontMap UIFontMap;
-		static FontMap LargeFontMap;
+		public static FontMap UIFontMap;
+		public static FontMap LargeFontMap;
 		System.Diagnostics.Stopwatch timer;
 		FrameBuffer offscreenBuffer;
 		SpriteUV offscreenSprite;
