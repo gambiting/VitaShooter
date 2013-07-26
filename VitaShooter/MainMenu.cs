@@ -99,27 +99,10 @@ namespace VitaShooter
 			
 			if(Input2.GamePad0.Cross.Press)
 			{
-				if(menuSelection==0)
-				{
-					
-					SceneManager.Instance.changeSceneTo(LevelSelectScene.Instance);
-				}else if(menuSelection==1)
-				{
-					SceneManager.Instance.changeSceneTo(TutorialScene.Instance);
-					
-				}else if(menuSelection==2)
-				{
-					if(Game.autoAim)
-					{
-						Game.autoAim=false;
-						sprite_button_autoaim.TextureInfo = new TextureInfo("/Application/data/button_autoaimoff.png");
-					}else
-					{
-						Game.autoAim=true;
-						sprite_button_autoaim.TextureInfo = new TextureInfo("/Application/data/button_autoaimon.png");
-					}
-				}
+				acceptChoice();
 			}
+			
+			
 			
 			if(Input2.GamePad0.Left.Press)
 			{
@@ -132,6 +115,33 @@ namespace VitaShooter
 				if(menuSelection==2) menuSelection = 0;
 				else menuSelection++;
 			}
+			
+			if(Input2.Touch00.Down)
+			{
+				if(sprite_button_newgame.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+				{
+					menuSelection=0;
+					
+				}else if(sprite_button_tutorial.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+				{
+					menuSelection=1;
+
+				}else if(sprite_button_autoaim.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+				{
+					menuSelection=2;
+				}
+			}
+			
+			if(Input2.Touch00.Release) 
+			{
+				if(sprite_button_newgame.IsWorldPointInsideContentLocalBounds(GetTouchPos())
+				   || sprite_button_tutorial.IsWorldPointInsideContentLocalBounds(GetTouchPos())
+				   || sprite_button_autoaim.IsWorldPointInsideContentLocalBounds(GetTouchPos()))
+				{
+					acceptChoice();
+				}
+			}
+			
 			
 			
 			switch(menuSelection)
@@ -163,6 +173,30 @@ namespace VitaShooter
 			}
 			
 			
+		}
+		
+		private void acceptChoice()
+		{
+			if(menuSelection==0)
+				{
+					
+					SceneManager.Instance.changeSceneTo(LevelSelectScene.Instance);
+				}else if(menuSelection==1)
+				{
+					SceneManager.Instance.changeSceneTo(TutorialScene.Instance);
+					
+				}else if(menuSelection==2)
+				{
+					if(Game.autoAim)
+					{
+						Game.autoAim=false;
+						sprite_button_autoaim.TextureInfo = new TextureInfo("/Application/data/button_autoaimoff.png");
+					}else
+					{
+						Game.autoAim=true;
+						sprite_button_autoaim.TextureInfo = new TextureInfo("/Application/data/button_autoaimon.png");
+					}
+				}
 		}
 		
 		public override void OnEnter ()
