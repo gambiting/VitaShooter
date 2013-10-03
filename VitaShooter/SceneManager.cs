@@ -140,9 +140,17 @@ namespace VitaShooter
 			//set the viewport to the size of the device again
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetViewport (0, 0, GraphicsContext.ScreenSizes [0].Width, GraphicsContext.ScreenSizes [0].Height);
 				
+			
+			
+			
+			
 			//draw the offscreen framebuffer on the actual screen
 			offscreenSprite.Draw ();
 			
+			if(((BasicScene)Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene).ui !=null)
+			{
+				((BasicScene)Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene).ui.DebugDrawContentLocalBounds();
+			}
 			
 			//DEBUG
 			//offscreenSprite.DebugDrawContentLocalBounds();

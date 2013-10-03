@@ -61,6 +61,8 @@ namespace VitaShooter
 			{
 				var parameters = line.Split('=');
 				GameParameters.Add(parameters[0],parameters[1]);
+				
+				Console.WriteLine(parameters[0] + parameters[1]);
 			}
 
 			

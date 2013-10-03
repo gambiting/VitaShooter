@@ -35,7 +35,6 @@ namespace VitaShooter
 		//QuadTree for colliding objects
 		public QuadTree quadTree;
 		
-		public UI ui;
 		
 		public int score=0;
 		
@@ -64,7 +63,7 @@ namespace VitaShooter
 		
 		public void initGame()
 		{
-			cameraHeight = 10.0f;
+			cameraHeight = (float)Convert.ToDouble(Support.GameParameters["StartingCameraHeight"]);
 			
 			//set view close to the scene
 			this.Camera2D.SetViewFromHeightAndCenter(cameraHeight, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
@@ -138,7 +137,7 @@ namespace VitaShooter
 			Foreground.AddChild(enemySpriteList);
 			
 			ui = new UI();
-			Interface.AddChild(ui);
+			//Interface.AddChild(ui);
 			
 			
 			//add an enemy spawner every second

@@ -64,7 +64,8 @@ namespace VitaShooter
 					sprite.TileIndex1D = animationFrame;
 					
 					//if close to the player,then follow,otherwise move randomly
-					if(Player.Instance.Position.Distance(sprite.Position) < 6.0f && isViewClear())
+					if(Player.Instance.Position.Distance(sprite.Position) < 6.0f && 
+					   Collisions.checkLineOfSight(this,Player.Instance))
 					{
 						isMovingRandomly=false;
 						step = (Player.Instance.Position - sprite.Position).Normalize()/15.0f;
@@ -163,35 +164,6 @@ namespace VitaShooter
 			
 		}
 		
-		/*
-		 * Checks if the view from the enemy to the Player is clear or not
-		 * 
-		 * */
-		public bool isViewClear()
-		{
-			
-			//create a vector2 with a position of an "imaginary bullet" - a bullet on its path from the entity
-			//to the position of the player
-			Vector2 imaginaryBulletPosition  = this.Position;
-			
-			//divide the distance into 10 steps - not super precise,but enough for quick detection
-			Vector2 iStep = (Player.Instance.Position - sprite.Position)/10.0f;
-			
-			//do the collision check for each step
-			for(int i=0;i<10;i++)
-			{
-				if(Collisions.checkWallsCollisionsSimple(imaginaryBulletPosition, MapManager.Instance.currentMap))
-				{
-					return false;
-				}
-				  
-				imaginaryBulletPosition+= iStep;
-			}
-			
-			//return true if there was no collision along the way
-			return true;
-			
-		}
 		
 	}
 }

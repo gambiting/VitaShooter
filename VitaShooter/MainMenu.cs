@@ -30,7 +30,7 @@ namespace VitaShooter
 		
 		public MainMenu ()
 		{
-			initTitle();
+			initTitle();	
 		}
 		
 		public void initTitle()

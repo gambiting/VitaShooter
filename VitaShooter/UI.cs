@@ -32,7 +32,7 @@ namespace VitaShooter
 			cameraOffset = new Vector2(-8.5f,-4.8f);
 			
 			
-			this.AdHocDraw += this.Draw;
+			this.AdHocDraw += this.Update;
 			
 			TextureInfo bottomBarInfo = new TextureInfo(AppMain.ttCreateTexture(1,1, 0xFF000000));
 			
@@ -70,26 +70,26 @@ namespace VitaShooter
 			this.AddChild (this.healthLabel);
 			this.AddChild(this.scoreLabel);
 			
+			this.Position = new Vector2(0.0f,0.0f);
+			this.Scale = new Vector2(200.0f,200.0f);
 		}
 		
-		public new void Draw()
+		public void Update()
 		{
-			
-			bottomBar.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(-1.0f,-1.2f);
-			ammoIcon.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(-0.1f,0.0f);
-			heartIcon.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(6.3f,0.0f);
-			coinIcon.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(11.5f,0.0f);
+			System.Console.WriteLine("hello");	
+			bottomBar.Position = new Vector2(-1.0f,-1.2f);
+			ammoIcon.Position =  new Vector2(-0.1f,0.0f);
+			heartIcon.Position =  new Vector2(6.3f,0.0f);
+			coinIcon.Position =  new Vector2(11.5f,0.0f);
 			
 			ammoLabel.Text = "Ammo: " + Player.Instance.ammo + "/" + Player.Instance.maxAmmo;
-			ammoLabel.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(0.5f,0.0f);  //new Vector2(-2.0f,4.0f);
+			ammoLabel.Position =  new Vector2(0.5f,0.0f);  //new Vector2(-2.0f,4.0f);
 			
 			healthLabel.Text = "Health: " + Player.Instance.Health;
-			healthLabel.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(7.0f,0.0f); //+ new Vector2(2.0f,-2.0f);  //new Vector2(-2.0f,4.0f);
+			healthLabel.Position =  new Vector2(7.0f,0.0f); //+ new Vector2(2.0f,-2.0f);  //new Vector2(-2.0f,4.0f);
 			
 			scoreLabel.Text = "Score: " + Game.Instance.score ;
-			scoreLabel.Position = Game.Instance.Camera2D.Center + cameraOffset + new Vector2(12f,0.0f);
-			
-			
+			scoreLabel.Position =  new Vector2(12f,0.0f);
 			
 			
 		}

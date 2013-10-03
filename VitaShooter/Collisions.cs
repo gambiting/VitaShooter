@@ -22,6 +22,43 @@ namespace VitaShooter
 		{
 		}
 		
+		/*
+		 * if no precision was specified then use the default one
+		 * */
+		public static bool checkLineOfSight(GameEntity start, GameEntity end)
+		{
+			return checkLineOfSight(start,end,Convert.ToInt32(Support.GameParameters["CollisionCheckPrecision"]));
+		}
+		
+		
+		/*
+		 * Checks whatever the line of sight between two game entities is clear or not
+		 * precision describes how many iterations of collision checks are done per call
+		 * */
+		public static bool checkLineOfSight(GameEntity start, GameEntity end, int precision)
+		{
+			//create a vector2 with a position of an "imaginary bullet" - a bullet on its path from the entity
+			//to the position of the player
+			Vector2 imaginaryBulletPosition  = start.Position;
+			
+			//divide the distance into 10 steps - not super precise,but enough for quick detection
+			Vector2 iStep = (end.Position - start.Position)/(float)precision;
+			
+			//do the collision check for each step
+			for(int i=0;i<precision;i++)
+			{
+				if(Collisions.checkWallsCollisionsSimple(imaginaryBulletPosition, MapManager.Instance.currentMap))
+				{
+					return false;
+				}
+				  
+				imaginaryBulletPosition+= iStep;
+			}
+			
+			//return true if there was no collision along the way
+			return true;
+		}
+		
 		
 		/*
 		 * Checks collisions with walls - for a given GameEntity ge, given map and a proposed Vector2 change to ge's position
