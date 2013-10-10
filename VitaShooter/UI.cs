@@ -29,7 +29,9 @@ namespace VitaShooter
 		
 		public UI ()
 		{
-			
+			//camera which is independent from the scene camera - means that all changes done to the underlying scene will not
+			//change the perspective of the UI and that it will stay in place
+			//the default view for the UI camera is ViewFromViewport - so the operational area is as big as the screen - currently 960x540
 			this.Camera = (ICamera) SceneManager.Instance.UICamera;
 			
 			this.AdHocDraw += this.Update;
@@ -37,20 +39,22 @@ namespace VitaShooter
 			TextureInfo bottomBarInfo = new TextureInfo(AppMain.ttCreateTexture(1,1, 0xFF000000));
 			
 			bottomBar = new SpriteUV(bottomBarInfo);
-			bottomBar.Scale= new Vector2(30.0f,2.0f);
+			//texture is 1x1 so we need to scale it to size we want to occupy on the screen
+			bottomBar.Scale= new Vector2(960.0f,50.0f);
 			
 			TextureInfo ammoIconInfo = new TextureInfo("/Application/data/tiles/ammo.png");
 			ammoIcon = new SpriteUV(ammoIconInfo);
-			ammoIcon.Scale = new Vector2(0.6f,0.6f);
+			ammoIcon.Scale = ammoIcon.TextureInfo.TextureSizef;
 			
 			TextureInfo heartIconInfo = new TextureInfo("/Application/data/heart.png");
 			heartIcon = new SpriteUV(heartIconInfo);
-			heartIcon.Scale = new Vector2(0.6f,0.5f);
+			heartIcon.Scale = heartIcon.TextureInfo.TextureSizef;
 			
 			TextureInfo coinIconInfo = new TextureInfo("/Application/data/coin.png");
 			coinIcon = new SpriteUV(coinIconInfo);
-			coinIcon.Scale = new Vector2(0.6f,0.6f);
+			coinIcon.Scale = coinIcon.TextureInfo.TextureSizef;
 			
+			//experimental fontmap
 			Font f = new Font("/Application/data/data-latin.ttf",15, FontStyle.Bold);
 			FontMap fm = new FontMap(f);
 			
@@ -59,16 +63,9 @@ namespace VitaShooter
 			heartIcon.Position =  new Vector2(6.3f,0.0f);
 			coinIcon.Position =  new Vector2(11.5f,0.0f);
 			
-			//ammoLabel.FontMap = fm; 
-			//healthLabel.FontMap = fm;
-			//scoreLabel.FontMap = fm;
-			
-			ammoLabel.Scale = new Vector2(0.05f,0.05f);
-			ammoLabel.FontMap = fm;
+
 			ammoLabel.Position =  new Vector2(0.5f,0.1f);
-			healthLabel.Scale = new Vector2(0.05f,0.05f);
 			healthLabel.Position =  new Vector2(7.0f,0.1f);
-			scoreLabel.Scale = new Vector2(0.05f,0.05f);
 			scoreLabel.Position =  new Vector2(12f,0.1f);
 
 			this.AddChild(bottomBar);
@@ -80,27 +77,19 @@ namespace VitaShooter
 			this.AddChild(this.scoreLabel);
 			
 			this.Position = new Vector2(0.0f,0.0f);
-			this.Scale = new Vector2(50.0f,50.0f);
+
 			
 		}
 		
 		public void Update()
 		{
-			Bounds2 b = new Bounds2();
-			
-			System.Console.WriteLine("hello");	
-			
 			
 			ammoLabel.Text = "Ammo: " + Player.Instance.ammo + "/" + Player.Instance.maxAmmo;
-			  //new Vector2(-2.0f,4.0f);
 			
 			healthLabel.Text = "Health: " + Player.Instance.Health;
-			 //+ new Vector2(2.0f,-2.0f);  //new Vector2(-2.0f,4.0f);
 			
 			scoreLabel.Text = "Score: " + Game.Instance.score ;
 			
-			this.GetlContentLocalBounds(ref b);
-			Console.WriteLine(b);
 			
 		}
 	}
