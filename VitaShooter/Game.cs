@@ -16,7 +16,7 @@ namespace VitaShooter
 		
 		public static Game Instance;
 		
-		
+		UI ui;
 		
 		
 
@@ -137,7 +137,7 @@ namespace VitaShooter
 			Foreground.AddChild(enemySpriteList);
 			
 			ui = new UI();
-			//Interface.AddChild(ui);
+			Interface.AddChild(ui);
 			
 			
 			//add an enemy spawner every second

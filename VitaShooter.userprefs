@@ -1,15 +1,18 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\SceneManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\UI.cs">
     <Files>
       <File FileName="VitaShooter\MapManager.cs" Line="19" Column="3" />
       <File FileName="VitaShooter\Map.cs" Line="256" Column="6" />
-      <File FileName="VitaShooter\Game.cs" Line="60" Column="2" />
-      <File FileName="VitaShooter\SceneManager.cs" Line="88" Column="4" />
-      <File FileName="c:\Users\Wojtek\Dropbox\Vita Game Project\VitaShooter\VitaShooter\Player.cs" Line="46" Column="4" />
+      <File FileName="VitaShooter\Game.cs" Line="140" Column="4" />
+      <File FileName="VitaShooter\SceneManager.cs" Line="149" Column="4" />
       <File FileName="VitaShooter\AppMain.cs" Line="37" Column="5" />
-      <File FileName="VitaShooter\MainMenu.cs" Line="12" Column="1" />
-      <File FileName="VitaShooter\data\configuration\GameConfig.txt" Line="3" Column="1" />
+      <File FileName="VitaShooter\MainMenu.cs" Line="40" Column="71" />
+      <File FileName="VitaShooter\data\configuration\GameConfig.txt" Line="3" Column="26" />
+      <File FileName="VitaShooter\GameUI.cs" Line="11" Column="6" />
+      <File FileName="VitaShooter\GameUI.composer.cs" Line="30" Column="52" />
+      <File FileName="VitaShooter\UIGame.cs" Line="18" Column="4" />
+      <File FileName="VitaShooter\UI.cs" Line="73" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

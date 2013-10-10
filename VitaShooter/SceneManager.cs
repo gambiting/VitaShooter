@@ -13,6 +13,8 @@ using Sce.PlayStation.Core.Audio;
 using Sce.PlayStation.HighLevel.GameEngine2D;
 using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
+using Sce.PlayStation.HighLevel.UI;
+
 namespace VitaShooter
 {
 	public class SceneManager
@@ -24,18 +26,22 @@ namespace VitaShooter
 		FrameBuffer offscreenBuffer;
 		SpriteUV offscreenSprite;
 		
+		public Camera2D UICamera;
+		
+		UIGame uigame;
+		
 		public SceneManager ()
 		{
 			
 		}
 		
-		public void changeSceneTo(Scene scene)
+		public void changeSceneTo(Sce.PlayStation.HighLevel.GameEngine2D.Scene scene)
 		{
 			//set the director to run with the scene within the game object
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.ReplaceScene(scene);
 		}
 		
-		public void pushScene(Scene scene)
+		public void pushScene(Sce.PlayStation.HighLevel.GameEngine2D.Scene scene)
 		{
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.PushScene(scene);
 		}
@@ -57,6 +63,10 @@ namespace VitaShooter
 			//loading fonts - currently not used
 			UIFontMap = new FontMap (new Font (FontAlias.System, 20, FontStyle.Bold));
 			LargeFontMap = new FontMap (new Font (FontAlias.System, 48, FontStyle.Bold));
+			
+			//create a camera for the UI
+			UICamera = new Camera2D(Director.Instance.GL, Director.Instance.DrawHelpers);
+			UICamera.SetViewFromViewport();
 			
 			//make a map manager object
 			MapManager.Instance = new MapManager();
@@ -105,11 +115,15 @@ namespace VitaShooter
 			offscreenSprite.Quad.S = new Vector2 (2.0f, 2.0f);
 			offscreenSprite.Quad.T = new Vector2 (-1.0f, -1.0f);
 			offscreenSprite.FlipV = true;
-			
 			Support.LoadGameParameters();
 			
 			Support.screenWidth = GraphicsContext.ScreenSizes [0].Width;
 			Support.screenHeight = GraphicsContext.ScreenSizes [0].Height;
+			
+			
+			//setup UI
+			UISystem.Initialize(Director.Instance.GL.Context);
+			UISystem.SetScene(new GameUI());
 			
 		}
 		
@@ -122,7 +136,7 @@ namespace VitaShooter
 			SystemEvents.CheckEvents ();
 				
 			//set up GL instance
-			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.SetBlendMode (BlendMode.Normal);
+			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.SetBlendMode (Sce.PlayStation.HighLevel.GameEngine2D.Base.BlendMode.Normal);
 			//update the Director
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.Update ();
 
@@ -133,6 +147,7 @@ namespace VitaShooter
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetViewport (0, 0, 960, 544);
 			//render the scene to the framebuffer
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene.render ();
+			
 				
 			//switch to the default framebuffer again
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetFrameBuffer (null);
@@ -140,17 +155,15 @@ namespace VitaShooter
 			//set the viewport to the size of the device again
 			Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.GL.Context.SetViewport (0, 0, GraphicsContext.ScreenSizes [0].Width, GraphicsContext.ScreenSizes [0].Height);
 				
-			
-			
-			
-			
 			//draw the offscreen framebuffer on the actual screen
 			offscreenSprite.Draw ();
 			
-			if(((BasicScene)Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene).ui !=null)
-			{
-				((BasicScene)Sce.PlayStation.HighLevel.GameEngine2D.Director.Instance.CurrentScene).ui.DebugDrawContentLocalBounds();
-			}
+			
+			
+			//render UI
+			//UISystem.Update(Touch.GetData(0));
+    		//UISystem.Render();
+			
 			
 			//DEBUG
 			//offscreenSprite.DebugDrawContentLocalBounds();

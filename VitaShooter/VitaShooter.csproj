@@ -36,6 +36,7 @@
     <Reference Include="System.Core" />
     <Reference Include="Sce.PlayStation.Core" />
     <Reference Include="Sce.PlayStation.HighLevel.GameEngine2D" />
+    <Reference Include="Sce.PlayStation.HighLevel.UI" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Player.cs" />
@@ -52,7 +53,6 @@
     <Compile Include="QuadTree.cs" />
     <Compile Include="pointMarker.cs" />
     <Compile Include="ammoMarker.cs" />
-    <Compile Include="UI.cs" />
     <Compile Include="EnemySpawnPoint.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Support.cs" />
@@ -64,6 +64,11 @@
     <Compile Include="LevelSelectScene.cs" />
     <Compile Include="GameOverScene.cs" />
     <Compile Include="PauseScene.cs" />
+    <Compile Include="GameUI.composer.cs" />
+    <Compile Include="GameUI.cs" />
+    <Compile Include="UIGame.cs" />
+    <Compile Include="UIStringTable.cs" />
+    <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
@@ -143,5 +148,7 @@
     <None Include="data\tiles\basic.tmx" />
     <None Include="data\tiles\Untitled-4.psd" />
     <None Include="data\tiles\enemy_sword.psd" />
+    <None Include="VitaShooter.uic" />
+    <None Include="VitaShooter_LanguageTable.csv" />
   </ItemGroup>
 </Project>

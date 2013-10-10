@@ -22,8 +22,6 @@ namespace VitaShooter
         public Layer Foreground { get; set; }
         public Layer Interface { get; set; }
 		
-		public UI ui;
-		
 		public BasicScene ()
 		{
 			//create layers for everyting
