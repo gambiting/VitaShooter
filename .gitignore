@@ -81,6 +81,8 @@ ipch/
 *.psess
 *.vsp
 
+*.pidb
+
 # ReSharper is a .NET coding add-in
 _ReSharper*
 
