@@ -77,8 +77,6 @@ namespace VitaShooter
 			this.AddChild(this.scoreLabel);
 			
 			this.Position = new Vector2(0.0f,0.0f);
-
-			
 		}
 		
 		public void Update()
