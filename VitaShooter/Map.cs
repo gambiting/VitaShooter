@@ -176,9 +176,9 @@ namespace VitaShooter
 			 * 
 			 * set all tiles that have a floor next to them to be of type "wall"
 			 * */
-			for(int x=1;x<width-2;x++)
+			for(int x=1;x<width-1;x++)
 			{
-				for(int y=1;y<height-2;y++)
+				for(int y=1;y<height-1;y++)
 				{
 					int position = y*m.width+x;
 					if(tiles[position].type == MapTile.Types.empty)
@@ -380,6 +380,7 @@ namespace VitaShooter
 			try {
 				while (!sr.EndOfStream) {
 					char character = (char)sr.Read ();
+					
 					if (character == '\t') {
 						tiles.Add (new MapTile (MapTile.Types.empty));
 					} else if (character == 'D') {
@@ -395,7 +396,8 @@ namespace VitaShooter
 						sr.Read ();
 					}
 					
-					if (character == '\n') {
+					
+					if(character == '\n') {
 						tiles.Add (new MapTile (MapTile.Types.empty));
 						m.height++;
 						
@@ -404,7 +406,9 @@ namespace VitaShooter
 						
 						m.width = tempWidth;
 						
-					} else if (m.width == 0) {
+					} else if (character == '\r')
+					{
+					}else if (m.width == 0) {
 						tempWidth++;
 					}
 				}
