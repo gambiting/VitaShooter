@@ -44,29 +44,29 @@ namespace VitaShooter
 			
 			TextureInfo ammoIconInfo = new TextureInfo("/Application/data/tiles/ammo.png");
 			ammoIcon = new SpriteUV(ammoIconInfo);
-			ammoIcon.Scale = ammoIcon.TextureInfo.TextureSizef;
+			ammoIcon.Scale = new Vector2(20,20);
 			
 			TextureInfo heartIconInfo = new TextureInfo("/Application/data/heart.png");
 			heartIcon = new SpriteUV(heartIconInfo);
-			heartIcon.Scale = heartIcon.TextureInfo.TextureSizef;
+			heartIcon.Scale = new Vector2(20,20);
 			
 			TextureInfo coinIconInfo = new TextureInfo("/Application/data/coin.png");
 			coinIcon = new SpriteUV(coinIconInfo);
-			coinIcon.Scale = coinIcon.TextureInfo.TextureSizef;
+			coinIcon.Scale = new Vector2(20,20);
 			
 			//experimental fontmap
 			Font f = new Font("/Application/data/data-latin.ttf",15, FontStyle.Bold);
 			FontMap fm = new FontMap(f);
 			
-			bottomBar.Position = new Vector2(-1.0f,-1.2f);
-			ammoIcon.Position =  new Vector2(-0.1f,0.0f);
-			heartIcon.Position =  new Vector2(6.3f,0.0f);
-			coinIcon.Position =  new Vector2(11.5f,0.0f);
+			bottomBar.Position = new Vector2(0.0f,0.0f);
 			
+			coinIcon.Position =  new Vector2(176.0f,15.0f);			
+			heartIcon.Position =  new Vector2(424.0f,15.0f);
+			ammoIcon.Position =  new Vector2(676.0f,15.0f);			
 
-			ammoLabel.Position =  new Vector2(0.5f,0.1f);
-			healthLabel.Position =  new Vector2(7.0f,0.1f);
-			scoreLabel.Position =  new Vector2(12f,0.1f);
+			scoreLabel.Position =  new Vector2(200f,20.0f);
+			healthLabel.Position =  new Vector2(450.0f,20.0f);			
+			ammoLabel.Position =  new Vector2(700.0f,20.0f);
 
 			this.AddChild(bottomBar);
 			this.AddChild(ammoIcon);
