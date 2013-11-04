@@ -121,13 +121,13 @@
     <Content Include="data\tut5.png" />
     <Content Include="data\gameover.png" />
     <Content Include="data\configuration\GameConfig.txt" />
-    <Content Include="data\maps\dungeon2.txt" />
-    <Content Include="data\maps\dungeon3.txt" />
     <Content Include="data\button_returntomenu.png" />
     <Content Include="data\button_returntogame.png" />
     <Content Include="data\maps\dungeon1.txt">
       <DeployService-Deploy>true</DeployService-Deploy>
     </Content>
+    <Content Include="data\maps\dungeon2.txt" />
+    <Content Include="data\maps\dungeon12.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
@@ -150,5 +150,6 @@
     <None Include="data\maps\dungeon10.txt" />
     <None Include="data\maps\dungeon9.txt" />
     <None Include="data\maps\dungeon11.txt" />
+    <None Include="data\maps\dungeon3.txt" />
   </ItemGroup>
 </Project>
