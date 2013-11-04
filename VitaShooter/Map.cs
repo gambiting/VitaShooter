@@ -21,6 +21,8 @@ namespace VitaShooter
 		public static Map Instance;
 		public List<MapTile> tiles;
 		
+		public String filePath;
+		
 		public List<MapTile> wallTiles;
 		public int width = 0, height = 0;
 		public List<SpriteList> spriteList { get; set;}
@@ -34,7 +36,7 @@ namespace VitaShooter
 		
 		public Map (string filePath)
 		{
-			
+			this.filePath = filePath;
 			random = new Random();
 			
 			tileLocations = new Dictionary<MapTile.Types, Vector2i>();
@@ -174,9 +176,9 @@ namespace VitaShooter
 			 * 
 			 * set all tiles that have a floor next to them to be of type "wall"
 			 * */
-			for(int x=1;x<width-1;x++)
+			for(int x=1;x<width-2;x++)
 			{
-				for(int y=1;y<height-1;y++)
+				for(int y=1;y<height-2;y++)
 				{
 					int position = y*m.width+x;
 					if(tiles[position].type == MapTile.Types.empty)
