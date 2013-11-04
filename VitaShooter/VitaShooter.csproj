@@ -113,7 +113,6 @@
     <Content Include="data\plusammo.png" />
     <Content Include="data\data-latin.ttf" />
     <Content Include="data\heart.png" />
-    <Content Include="data\coin.png" />
     <Content Include="data\tut1.png" />
     <Content Include="data\tut2.png" />
     <Content Include="data\tut3.png" />
@@ -128,6 +127,7 @@
     <Content Include="data\maps\dungeon1.txt">
       <DeployService-Deploy>true</DeployService-Deploy>
     </Content>
+    <Content Include="data\coin.png" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
