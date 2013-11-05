@@ -18,7 +18,7 @@ namespace VitaShooter
 		
 		UI ui;
 		
-		
+		Camera2D referenceCamera2D;
 
 		//enemy sprite list
 		public SpriteList enemySpriteList;
@@ -65,10 +65,13 @@ namespace VitaShooter
 		{
 			cameraHeight = (float)Convert.ToDouble(Support.GameParameters["StartingCameraHeight"]);
 			
+			referenceCamera2D = new Camera2D(Director.Instance.GL, Director.Instance.DrawHelpers);
+			referenceCamera2D.SetViewFromHeightAndCenter(cameraHeight, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
+			
 			//set view close to the scene
-			this.Camera2D.SetViewFromHeightAndCenter(cameraHeight, Sce.PlayStation.HighLevel.GameEngine2D.Base.Math._00);
-			
-			
+			this.Camera = new Camera3D(Director.Instance.GL, Director.Instance.DrawHelpers);
+			this.Camera3D.SetViewFromViewport();
+			this.Camera3D.SetFromCamera2D(referenceCamera2D);
 			
 			//add all sprites loaded from the map
 			foreach(SpriteList sl in MapManager.Instance.currentMap.spriteList)
@@ -275,8 +278,12 @@ namespace VitaShooter
 		public void setCameraPosition()
 		{
 			//camera.Center = new Vector2((float) System.Math.Round(player.Position.X,1),(float) System.Math.Round(player.Position.Y,1)) ;
-			this.Camera2D.Center = Player.Instance.Position;
+			//this.Camera2D.Center = Player.Instance.Position;
+			referenceCamera2D.Center = Player.Instance.Position;
 			
+			this.Camera3D.SetFromCamera2D(referenceCamera2D);
+			
+			this.Camera3D.Eye = this.Camera3D.Eye + new Vector3(0.0f,-4.0f,5.0f);
 			//camera.Center.
 			
 			//camera.Center.MoveTo(player.Position,1f);
