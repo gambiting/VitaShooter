@@ -1,3 +1,3 @@
 StartingScene=MainMenu
 CollisionCheckPrecision=10
-StartingCameraHeight=20.0
+StartingCameraHeight=10.0

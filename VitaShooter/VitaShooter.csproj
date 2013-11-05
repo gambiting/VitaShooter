@@ -128,6 +128,15 @@
     <Content Include="data\coin.png" />
     <Content Include="data\maps\dungeon2.txt" />
     <Content Include="data\maps\dungeon12.txt" />
+    <Content Include="data\maps\dungeon4.txt" />
+    <Content Include="data\maps\dungeon5.txt" />
+    <Content Include="data\maps\dungeon6.txt" />
+    <Content Include="data\maps\dungeon7.txt" />
+    <Content Include="data\maps\dungeon8.txt" />
+    <Content Include="data\maps\dungeon10.txt" />
+    <Content Include="data\maps\dungeon9.txt" />
+    <Content Include="data\maps\dungeon11.txt" />
+    <Content Include="data\maps\dungeon3.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="data\" />
@@ -142,14 +151,5 @@
     <None Include="data\tiles\enemy_sword.psd" />
     <None Include="VitaShooter.uic" />
     <None Include="VitaShooter_LanguageTable.csv" />
-    <None Include="data\maps\dungeon4.txt" />
-    <None Include="data\maps\dungeon5.txt" />
-    <None Include="data\maps\dungeon6.txt" />
-    <None Include="data\maps\dungeon7.txt" />
-    <None Include="data\maps\dungeon8.txt" />
-    <None Include="data\maps\dungeon10.txt" />
-    <None Include="data\maps\dungeon9.txt" />
-    <None Include="data\maps\dungeon11.txt" />
-    <None Include="data\maps\dungeon3.txt" />
   </ItemGroup>
 </Project>
