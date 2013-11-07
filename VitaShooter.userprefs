@@ -1,21 +1,23 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\Map.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="VitaShooter\GameEntity.cs">
     <Files>
-      <File FileName="VitaShooter\UI.cs" Line="73" Column="29" />
-      <File FileName="VitaShooter\Map.cs" Line="405" Column="9" />
-      <File FileName="VitaShooter\data\maps\dungeon1.txt" Line="29" Column="17" />
-      <File FileName="VitaShooter\data\maps\dungeon10.txt" Line="1" Column="1" />
-      <File FileName="VitaShooter\data\maps\dungeon11.txt" Line="1" Column="1" />
-      <File FileName="VitaShooter\data\maps\dungeon2.txt" Line="23" Column="13" />
-      <File FileName="VitaShooter\data\maps\dungeon3.txt" Line="1" Column="1" />
-      <File FileName="VitaShooter\data\maps\dungeon6.txt" Line="1" Column="1" />
+      <File FileName="VitaShooter\UI.cs" Line="5" Column="36" />
+      <File FileName="VitaShooter\Map.cs" Line="385" Column="1" />
+      <File FileName="VitaShooter\MainMenu.cs" Line="124" Column="6" />
+      <File FileName="VitaShooter\data\configuration\GameConfig.txt" Line="3" Column="26" />
+      <File FileName="VitaShooter\SceneManager.cs" Line="52" Column="2" />
+      <File FileName="VitaShooter\Game.cs" Line="16" Column="3" />
+      <File FileName="VitaShooter\Bullet.cs" Line="11" Column="21" />
+      <File FileName="VitaShooter\Player.cs" Line="13" Column="2" />
+      <File FileName="VitaShooter\Collisions.cs" Line="75" Column="17" />
+      <File FileName="VitaShooter\Weapon.cs" Line="5" Column="21" />
+      <File FileName="VitaShooter\GameEntity.cs" Line="24" Column="23" />
+      <File FileName="VitaShooter\BasicEnemy.cs" Line="27" Column="25" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="C:\Users\cmdadmin\Documents\GitHub\VitaShooter\VitaShooter\Map.cs" line="383" />
-    </BreakpointStore>
+    <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

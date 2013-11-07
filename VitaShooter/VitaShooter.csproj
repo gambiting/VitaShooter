@@ -69,6 +69,8 @@
     <Compile Include="UIGame.cs" />
     <Compile Include="UIStringTable.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="Weapon.cs" />
+    <Compile Include="WeaponPistol.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
