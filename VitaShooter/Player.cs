@@ -25,6 +25,10 @@ namespace VitaShooter
 		public int ammo = 100;
 		public int maxAmmo = 100;
 		
+		public Weapon primaryWeapon;
+		public Weapon secondaryWeapon;
+		public Weapon specialWeapon;
+		
 		public Player ()
 		{
 			//load the player's sprite
