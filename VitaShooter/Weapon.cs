@@ -17,6 +17,10 @@ namespace VitaShooter
 		public int firingDelay;		//delay between shots
 		public Timer lastShotTimer;	//timer which stores the time of the last shot
 		public bool repeatable;		//sets whatever the weapon can be fired by holding the fire button
+		public int clipCapacity;	//capacity of a single clip
+		public int ammoCapacity;	//capacity of the entire ammo
+		public int currentAmmoInClip;		//current ammo in clip
+		public int currentAmmoInStorage; 	//current ammo in storage(not in the clip)
 		
 		public Weapon ()
 		{
