@@ -12,7 +12,7 @@ using Sce.PlayStation.HighLevel.GameEngine2D.Base;
 
 namespace VitaShooter
 {
-	public class Weapon
+	public abstract class Weapon
 	{
 		public int firingDelay;		//delay between shots
 		public Timer lastShotTimer;	//timer which stores the time of the last shot
@@ -26,7 +26,7 @@ namespace VitaShooter
 		{
 		}
 		
-		public virtual List<Bullet> fire(Vector2 startingPosition, Vector2 aimingPosition);
+		public abstract List<BasicBullet> fire(Vector2 startingPosition, Vector2 aimingPosition);
 	}
 }
 
