@@ -86,7 +86,9 @@ namespace VitaShooter
 			ammoMarker.texture = new Texture2D("/Application/data/plusammo.png", false);
 			
 			Player.Instance = new Player();
+			Crosshair.Instance = new Crosshair();
 			Foreground.AddChild(Player.Instance);
+			Interface.AddChild(Crosshair.Instance);
 			
 			//create the list for bullets
 			bulletList = new List<Bullet>();
