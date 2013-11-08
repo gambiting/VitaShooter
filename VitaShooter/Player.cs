@@ -168,7 +168,7 @@ namespace VitaShooter
 			}
 			
 			//update the aiming at position
-			aimingAt = Player.Instance.Position + (new Vector2(0f,Player.Instance.Scale.Y*2.0f)).Rotate(Player.Instance.playerBodySprite.Rotation);
+			aimingAt = Player.Instance.Position + (new Vector2(0f,Player.Instance.Scale.Y)).Rotate(Player.Instance.playerBodySprite.Rotation);
 			Crosshair.Instance.Position = aimingAt;
 				
 		}
