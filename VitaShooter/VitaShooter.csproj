@@ -72,6 +72,7 @@
     <Compile Include="Weapon.cs" />
     <Compile Include="WeaponPistol.cs" />
     <Compile Include="BasicBullet.cs" />
+    <Compile Include="Crosshair.cs" />
   </ItemGroup>
   <ItemGroup>
     <ShaderProgram Include="shaders\Simple.fcg" />
