@@ -32,7 +32,7 @@ namespace VitaShooter
 		{
 			
 			Position = pos;
-
+			
 			sprite = new SpriteTile ();
 			sprite.TextureInfo = tex;
 			sprite.Position = pos;

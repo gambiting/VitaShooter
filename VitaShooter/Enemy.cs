@@ -40,7 +40,6 @@ namespace VitaShooter
 		
 		public Enemy ()
 		{
-			
 			//creates a texture for the health bar
 			healthBar = AppMain.ttCreateTexture(16,1,0xff00ff00);
 			
@@ -62,6 +61,9 @@ namespace VitaShooter
 			
 			//move the sprite to the position of this enemy
 			sprite.Position = this.Position;
+			
+			//that's how to move the enemies on the Z axis
+			//sprite.Parent.VertexZ = 5.0f;
 			
 			//if health <0 then remove this enemy
 			if(health<=0)
